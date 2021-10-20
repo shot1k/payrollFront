@@ -6,7 +6,7 @@ import axios from "axios";
 import constants from '../../constant'
 import { HOME_PAGE } from '../../constant';
 
-function EmployeeTable({employeeArray, fetchData}) {
+function EmployeeTable({ employeeArray, fetchData, showDelete }) {
 
     const columns = [
         {
@@ -15,21 +15,26 @@ function EmployeeTable({employeeArray, fetchData}) {
             render: (text, record) =>
                 <div>
                     <Space>
-                        <Popconfirm
-                            title="Are you sure to delete this task?"
-                            onConfirm={() => confirm(record)}
-                            okText="Yes"
-                            cancelText="No"
-                        >
-                            <Tooltip title="წაშლა">
-                                <Button type="primary" icon={<DeleteOutlined />} />
-                            </Tooltip>
+                        {showDelete ?
+                            <Popconfirm
+                                title="Are you sure to delete this task?"
+                                onConfirm={() => confirm(record)}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <Tooltip title="წაშლა">
+                                    <Button type="primary" icon={<DeleteOutlined />} />
+                                </Tooltip>
+                            </Popconfirm>
+                            : ''
+                        }
 
-                        </Popconfirm>
                         <Tooltip title="რედაქტირება">
                             <Button onClick={() => clickEdit(record)} type="primary" icon={<EditOutlined />} />
                         </Tooltip>
                     </Space>
+
+
                 </div>
         },
         {
@@ -75,32 +80,32 @@ function EmployeeTable({employeeArray, fetchData}) {
     //     // setTableLoading(false);
     //   }
 
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
+    //   useEffect(() => {
+    //     fetchData();
+    //   }, []);
 
 
-  const confirm = async (record) => {
-    console.log("record", record)
-    const result = await axios.delete(constants.API_PREFIX + "/api/Employee", { data: record });
-    console.log('result', result)
-    if (result.data.isSuccess) {
-      message.success(result.data.message);
-      fetchData();
+    const confirm = async (record) => {
+        console.log("record", record)
+        const result = await axios.delete(constants.API_PREFIX + "/api/Employee", { data: record });
+        console.log('result', result)
+        if (result.data.isSuccess) {
+            message.success(result.data.message);
+            fetchData();
+        }
+        else {
+            message.error(result.data.message);
+        }
     }
-    else {
-      message.error(result.data.message);
+
+    const clickEdit = (record) => {
+        // setIsEdiT(true);
+        console.log("clickEdit222", record, record.resId)
+
+
+        history.push(`${HOME_PAGE}/Employee/Edit/${record.id}`, record);
+        // setIsModalVisible(true);
     }
-  }
-
-  const clickEdit = (record) => {
-    // setIsEdiT(true);
-    console.log("clickEdit222", record, record.resId)
-    
-
-    history.push(`${HOME_PAGE}/Employee/Edit/${record.id}`, record);
-    // setIsModalVisible(true);
-  }
 
 
 

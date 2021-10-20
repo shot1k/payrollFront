@@ -6,6 +6,9 @@ import { Modal, Button, Form, Input, Table, Radio, Divider, Popconfirm, message,
 import { PlusCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import axios from "axios";
 import constants from '../../constant'
+import {
+  Link
+} from "react-router-dom"
 
 function Department() {
 
@@ -46,11 +49,11 @@ function Department() {
     {
       title: 'სახელი',
       dataIndex: 'name',
-      render: text => <a>{text}</a>,
     },
     {
       title: 'რაოდენობა',
-      dataIndex: 'numberOfEmployees',
+      dataIndex: 'employeeCount',
+      render: (text, record) =><Link to={`EmployeeByDepartment/${record.id}`}>{text}</Link>
     },
     {
       title: 'შექმნის თარიღი',
@@ -71,7 +74,7 @@ function Department() {
   const fetchData = async () => {
     setTableLoading(true);
     const result = await axios(constants.API_PREFIX+"/api/Department");
-    console.log("result", result);
+    console.log("resultDepartment", result);
     setDataSaveArray(result.data)
     setTableLoading(false);
   }

@@ -26,6 +26,8 @@ import Project from '../project/index';
 import CostCenter from '../costCenter/index';
 import AccountsReportChart from '../accountsReportChart/index';
 import EmployeeDetails from '../employee/employeeDetails';
+import EmployeeByDepartment from '../department/employeeByDepartment';
+
 
 import {
   BrowserRouter as Router,
@@ -209,6 +211,9 @@ function Home() {
             </Route>
             <Route path={`${HOME_PAGE}/department`}>
               <Department />
+            </Route>
+            <Route path={`${HOME_PAGE}/employeeByDepartment/:id`}>
+              <EmployeeByDepartment />
             </Route>
           </Switch>
 

@@ -28,6 +28,8 @@ function EmployeeDetails() {
 
     const [isEdiT, setIsEdiT] = useState(false);
     const [schemes, setSchemes] = useState([]);
+    const [employeeGraceTypes, setEmployeeGraceTypes] = useState([]);
+    const [employeeGraceTypesAmount, setEmployeeGraceTypesAmount] = useState("");
     const [employeeTypes, setEmployeeTypes] = useState([]);
     const [departments, setDepartments] = useState([]);
 
@@ -52,6 +54,15 @@ function EmployeeDetails() {
 
         console.log('result setSchemes---', result.data)
         setSchemes(result.data)
+        // setTableLoading(false);
+    }
+
+    const fetchEmployeeGraceTypes = async () => {
+        // setTableLoading(true);
+        const result = await axios(constants.API_PREFIX + "/api/Common/EmployeeGraceTypes");
+
+        console.log('result fetchEmployeeGraceTypes---', result.data)
+        setEmployeeGraceTypes(result.data)
         // setTableLoading(false);
     }
 
@@ -80,7 +91,7 @@ function EmployeeDetails() {
         const result = await axios(constants.API_PREFIX + `/api/Employee/getEmployee/${id}`);
 
         console.log('result fetchEmployeeById11111', result.data)
-      
+
         setEmployee(result.data)
         // setTableLoading(false);
     }
@@ -97,18 +108,30 @@ function EmployeeDetails() {
         fetchSchemes();
         //     fetchPaymentDaysTypes();
         fetchEmployeeTypes();
+        fetchEmployeeGraceTypes();
     }, []);
 
     const handleChange = (e) => {
         console.log(e.target.name, e.target.value);
-        setEmployee({ ...employee, [e.target.name]: e.target.value })
+        // setEmployee({ ...employee, [e.target.name]: e.target.value })
+        setEmployee({
+            ...employee,
+            [e.target.name]: (e.target.name != "graceAmount") ? e.target.value
+                : (isNaN(e.target.value) ? e.target.value : parseFloat(e.target.value))
+        })
     }
 
     const requiredFieldRule = [{ required: true, message: 'Required Field' }];
 
     const handleChangeSelect = (value, name) => {
-        setEmployee({ ...employee, [name]: value });
-        console.log('handleChangeSelect', value)
+        let newObj = { ...employee, [name]: value };
+
+        if (name == "employeeGraceTypeId") {
+            newObj.graceAmount =  employeeGraceTypes[value - 1].amount 
+        }
+        
+        setEmployee(newObj);
+
     }
 
     const handleSaveEmployee = async () => {
@@ -120,7 +143,7 @@ function EmployeeDetails() {
         else {
             result = await axios.put(constants.API_PREFIX + "/api/Employee", employee);
         }
-        console.log('result ', result)
+        console.log('result7788 ', result)
 
         if (result.data.isSuccess) {
             // fetchData();
@@ -217,6 +240,20 @@ function EmployeeDetails() {
                                 <Input disabled={employee.resId != null} value={employee.personalNumber} name="personalNumber" onChange={e => handleChange(e)} />
                             </Form.Item>
 
+                            <Form.Item label="EmployeeGraceTypes">
+                                <Select
+                                    disabled={employee.resId != null}
+                                    defaultValue="აირჩიეთ"
+                                    onChange={(value) => handleChangeSelect(value, 'employeeGraceTypeId')}
+                                    value={employee.employeeGraceTypeId}
+                                >
+                                    {
+                                        employeeGraceTypes.map((i) =>
+                                            <Option value={i.id}>{i.name}</Option>)
+                                    }
+                                </Select>
+                            </Form.Item>
+
                         </Col>
                         <Col span={6}>
                             <Form.Item label="Address">
@@ -237,6 +274,12 @@ function EmployeeDetails() {
                                             <Option value={i.id}>{i.name}</Option>)
                                     }
                                 </Select>
+                            </Form.Item>
+
+                            <Form.Item label="graceAmount">
+                                <Input disabled={employee.resId != null} type="number"
+                                    value={employee.graceAmount}
+                                    name="graceAmount" onChange={e => handleChange(e)} />
                             </Form.Item>
 
                         </Col>

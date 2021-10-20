@@ -43,27 +43,31 @@ function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
 
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-          setSelectValue(selectedRowKeys)
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            setSelectValue(selectedRowKeys)
         }
-      };
+    };
 
     useEffect(() => {
-        seach();
-    }, []);
+        if (isModalVisible) {
+            console.log("shemodis[isModalVisible]")
+            seach();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isModalVisible]);
 
 
     const handleOk = async () => {
-        console.log('selectValue',selectValue)
+        console.log('selectValue', selectValue)
         setIsModalVisible(false);
-        const result = await axios.post(constants.API_PREFIX+"/api/Employee/importFromSynergy", selectValue);
+        const result = await axios.post(constants.API_PREFIX + "/api/Employee/importFromSynergy", selectValue);
         if (result.data.isSuccess) {
             message.success(result.data.message);
             fetchData();
-          }
-          else {
+        }
+        else {
             message.error(result.data.message);
-          }
+        }
         console.log('selectValue', selectValue[0], result)
     };
 
@@ -77,15 +81,15 @@ function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
         setFilter({ ...filter, [name]: value })
 
     }
-    
 
-    const seach = async () =>{
+
+    const seach = async () => {
         console.log('filter', filter)
-        const result = await axios(constants.API_PREFIX + "/api/Synergy/humres", { params: filter});
+        const result = await axios(constants.API_PREFIX + "/api/Synergy/humres", { params: filter });
         console.log('result', result.data)
         setImportArray(result.data);
 
-        
+
     }
 
     return (

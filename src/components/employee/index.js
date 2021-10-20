@@ -54,7 +54,7 @@ function Employee() {
       <br />
       <ImportEmployee  isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} fetchData={fetchData} />
 
-      <EmployeeTable  employeeArray={dataSaveArray} fetchData={fetchData}/>
+      <EmployeeTable showDelete={true}  employeeArray={dataSaveArray} fetchData={fetchData}/>
 
     </div>
   );
