@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 
 import 'antd/dist/antd.css';
-import { Modal, Button, Form, Input, Table, Radio, Divider, Popconfirm, message, Space, Tooltip } from 'antd';
+import { Modal, Button, Form, Input, Table, Divider, Popconfirm, message, Space, Tooltip } from 'antd';
 import { PlusCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import axios from "axios";
 import constants from '../../constant'
 import {
   Link
 } from "react-router-dom"
+import { UserContext } from '../../App';
+
 
 function Department() {
+  const user = useContext(UserContext);
 
   const [department, setDepartment] = useState({
     name: ""
@@ -31,12 +34,12 @@ function Department() {
               okText="Yes"
               cancelText="No"
             >
-              <Tooltip title="წაშლა">
+              <Tooltip placement="bottom" title="წაშლა">
                 <Button type="primary" icon={<DeleteOutlined />} />
               </Tooltip>
             </Popconfirm>
 
-            <Tooltip title="რედაქტირება">
+            <Tooltip placement="bottom" title="რედაქტირება">
               <Button onClick={() => clickEdit(record)} type="primary" icon={<EditOutlined />} />
             </Tooltip>
           </Space>
@@ -136,12 +139,7 @@ function Department() {
     console.log('handleChange', e.target.name, department);
     setDepartment({ ...department, [e.target.name]: e.target.value });
   }
-
-  function clickDelete(id) {
-    console.log("clickDelete", id)
-    // setDataSaveArray(dataSaveArray.filter(info => info.id !== id));
-  }
-
+  
   const confirm = async (record) => {
     console.log("record", record)
     const result = await axios.delete(constants.API_PREFIX+"/api/Department", { data: record });
@@ -166,6 +164,8 @@ function Department() {
 
   return (
     <div>
+      <h2>{`department ${user} again!`}</h2>
+
       <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
         დამატება
       </Button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Space, Tooltip, Table, Button, Popconfirm, message } from 'antd';
 import { useHistory } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -22,14 +22,14 @@ function EmployeeTable({ employeeArray, fetchData, showDelete }) {
                                 okText="Yes"
                                 cancelText="No"
                             >
-                                <Tooltip title="წაშლა">
+                                <Tooltip placement="bottom" title="წაშლა">
                                     <Button type="primary" icon={<DeleteOutlined />} />
                                 </Tooltip>
                             </Popconfirm>
                             : ''
                         }
 
-                        <Tooltip title="რედაქტირება">
+                        <Tooltip placement="bottom" title="რედაქტირება">
                             <Button onClick={() => clickEdit(record)} type="primary" icon={<EditOutlined />} />
                         </Tooltip>
                     </Space>

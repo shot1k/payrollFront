@@ -21,8 +21,6 @@ function Employee() {
   };
 
   
-
-
   const fetchData = async () => {
     // setTableLoading(true);
     const result = await axios(constants.API_PREFIX + "/api/Employee");

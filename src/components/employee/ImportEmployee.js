@@ -34,6 +34,7 @@ function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
 
     const [importArray, setImportArray] = useState([]);
     const [selectValue, setSelectValue] = useState("");
+    const [searchLoading, setSearchLoading] = useState(false);
     const [filter, setFilter] = useState({
         resId: null,
         firstName: "",
@@ -48,12 +49,20 @@ function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
         }
     };
 
+
+
     useEffect(() => {
         if (isModalVisible) {
-            console.log("shemodis[isModalVisible]")
+            
+            setFilter({
+                ...filter,
+                resId: null,
+                firstName: "",
+                surName: ""
+            });
             seach();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isModalVisible]);
 
 
@@ -84,10 +93,15 @@ function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
 
 
     const seach = async () => {
+        setSearchLoading(true)
+
         console.log('filter', filter)
         const result = await axios(constants.API_PREFIX + "/api/Synergy/humres", { params: filter });
         console.log('result', result.data)
+
         setImportArray(result.data);
+        setSearchLoading(false)
+        
 
 
     }
@@ -97,13 +111,14 @@ function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
             <Modal width={700} title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
 
                 <Row gutter={[16, 24]}>
-                    <Col span={6}><Input onChange={handleChangeInput} name="resId" type="number" placeholder="ResId" /></Col>
-                    <Col span={6}><Input onChange={handleChangeInput} name="firstName" placeholder="FirstName" /></Col>
-                    <Col span={6}><Input onChange={handleChangeInput} name="surName" placeholder="SurName" /></Col>
-                    <Col span={6}><Button onClick={seach} type="primary" icon={<SearchOutlined />}>seach</Button></Col>
+                    <Col span={6}><Input value={filter.resId} onChange={handleChangeInput} name="resId" type="number" placeholder="ResId" /></Col>
+                    <Col span={6}><Input value={filter.firstName} onChange={handleChangeInput} name="firstName" placeholder="FirstName" /></Col>
+                    <Col span={6}><Input value={filter.surName} onChange={handleChangeInput} name="surName" placeholder="SurName" /></Col>
+                    <Col span={6}><Button loading={searchLoading} onClick={seach} type="primary" icon={<SearchOutlined />}>seach</Button></Col>
                 </Row>
                 <br />
                 <Table
+                    loading={searchLoading}
                     pagination={{ pageSizeOptions: [5, 10], defaultPageSize: 5 }}
                     rowSelection={{
                         ...rowSelection,

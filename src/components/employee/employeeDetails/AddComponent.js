@@ -30,12 +30,12 @@ function AddComponent({ employee, setEmployee }) {
                             okText="Yes"
                             cancelText="No"
                         >
-                            <Tooltip title="წაშლა">
+                            <Tooltip placement="bottom" title="წაშლა">
                                 <Button type="primary" icon={<DeleteOutlined />} />
                             </Tooltip>
 
                         </Popconfirm>
-                        <Tooltip title="რედაქტირება">
+                        <Tooltip placement="bottom" title="რედაქტირება">
                             <Button onClick={() => clickEdit(record)} type="primary" icon={<EditOutlined />} />
                         </Tooltip>
                     </Space>
