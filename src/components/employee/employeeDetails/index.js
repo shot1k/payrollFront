@@ -163,7 +163,6 @@ function EmployeeDetails() {
 
     const handleSaveEmployee = async () => {
         console.log("avto",previewImage);
-        return;
         let result;
         if (!isEdiT) {
             result = await axios.post(

@@ -9,11 +9,10 @@ import constants from '../../constant'
 import {
   Link
 } from "react-router-dom"
-import { UserContext } from '../../App';
 
 
 function Department() {
-  const user = useContext(UserContext);
+  // const {globalDepartments} = useContext(UserContext);
 
   const [department, setDepartment] = useState({
     name: ""
@@ -84,6 +83,7 @@ function Department() {
 
   useEffect(() => {
     fetchData();
+    // console.log("globalDepartments", globalDepartments)
   }, []);
 
 
@@ -164,7 +164,7 @@ function Department() {
 
   return (
     <div>
-      <h2>{`department ${user} again!`}</h2>
+      {/* <h2>{`department ${globalDepartments} again!`}</h2> */}
 
       <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
         დამატება

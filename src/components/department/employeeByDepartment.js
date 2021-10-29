@@ -12,7 +12,6 @@ import axios from "axios";
 import { Form, Select } from 'antd';
 // import App from '../../App';
 // import { UserProvider } from './src/context/appContext'
-import { UserContext } from '../../App';
 
 
 
@@ -20,7 +19,6 @@ const { Option } = Select;
 
 function EmployeeByDepartment() {
 
-  const user = useContext(UserContext);
 
 
   let { id } = useParams();
@@ -64,7 +62,6 @@ function EmployeeByDepartment() {
 
   return (
     <div>
-      <h2>{`employeebydepartment ${user} again!`}</h2>
       {/* <h3>ID: {id}</h3> */}
       {/* <UserContext>
         {(value) => (

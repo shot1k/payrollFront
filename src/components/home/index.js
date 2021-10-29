@@ -10,6 +10,7 @@ import {
   DatabaseOutlined,
   FundOutlined,
   AccountBookOutlined,
+  CalculatorOutlined,
   ProjectOutlined,
   StrikethroughOutlined,
   SettingOutlined,
@@ -27,6 +28,7 @@ import CostCenter from '../costCenter/index';
 import AccountsReportChart from '../accountsReportChart/index';
 import EmployeeDetails from '../employee/employeeDetails';
 import EmployeeByDepartment from '../department/employeeByDepartment';
+import Calculate from '../calculate';
 
 
 import {
@@ -59,7 +61,7 @@ function Home() {
     if (location.pathname == '/payroll/component') {
       setActiveUrl(['1']);
     }
-    
+
     if (location.pathname == '/payroll/coefficient') {
       setActiveUrl(['2']);
     }
@@ -80,6 +82,9 @@ function Home() {
     }
     if (location.pathname == '/payroll/department') {
       setActiveUrl(['7']);
+    }
+    if (location.pathname == '/payroll/calculate') {
+      setActiveUrl(['8']);
     }
 
   }, []);
@@ -124,14 +129,29 @@ function Home() {
     setActiveUrl(['7'])
     history.push(`${HOME_PAGE}/department`);
   }
+
+  const clickCalculate = () => {
+    setActiveUrl(['8'])
+    history.push(`${HOME_PAGE}/calculate`);
+  }
   return (
     <LayoutAnt>
       <Sider
-        theme="light" trigger={null} collapsible collapsed={collapsed} width={260}>
+        style={{
+          // overflow: 'auto',
+          // position: 'fixed',
+          // left: 0,
+          // height: '100vh',
+        }}
+        theme="light" trigger={null} collapsible collapsed={collapsed} width={260}
+        >
         <div className="logo" >
 
         </div>
         <Menu selectedKeys={activeUrl} theme="light" mode="inline"   >
+        <Menu.Item key="8" icon={<CalculatorOutlined />} onClick={clickCalculate}>
+              calculation
+            </Menu.Item>
           <Menu.Item key="1" icon={<FundOutlined />} onClick={clickcomponent}>
             component
           </Menu.Item>
@@ -158,6 +178,7 @@ function Home() {
             <Menu.Item key="7" icon={<DatabaseOutlined />} onClick={clickDepartment}>
               department
             </Menu.Item>
+           
           </SubMenu>
         </Menu>
       </Sider>
@@ -175,6 +196,7 @@ function Home() {
             // margin: '24px 16px',
             padding: 24,
             // minHeight: 280,
+            // textAlign: "center"
           }}
         >
           <Switch>
@@ -184,7 +206,7 @@ function Home() {
             <Route path={`${HOME_PAGE}/component`}>
               <Component />
             </Route>
-            
+
             <Route path={`${HOME_PAGE}/coefficient`}>
               <Coefficient />
             </Route>
@@ -211,6 +233,9 @@ function Home() {
             </Route>
             <Route path={`${HOME_PAGE}/department`}>
               <Department />
+            </Route>
+            <Route path={`${HOME_PAGE}/calculate`}>
+              <Calculate />
             </Route>
             <Route path={`${HOME_PAGE}/employeeByDepartment/:id`}>
               <EmployeeByDepartment />
