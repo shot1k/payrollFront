@@ -239,7 +239,7 @@ function EmployeeDetails() {
                     listType="picture-card"
 
             >
-                
+
                 {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
             </Upload> */}
             {/* <Button icon={<UploadOutlined />}>Click to Upload</Button> */}
@@ -433,6 +433,16 @@ function EmployeeDetails() {
                                         <Option value={i.id}>{i.name}</Option>
                                     ))}
                                 </Select>
+                            </Form.Item>
+
+                            <Form.Item label="remainingGraceAmount">
+                                <Input
+                                    disabled
+                                    type="number"
+                                    value={employee.remainingGraceAmount}
+                                    name="remainingGraceAmount"
+                                    onChange={(e) => handleChange(e)}
+                                />
                             </Form.Item>
                         </Col>
                     </Row>
