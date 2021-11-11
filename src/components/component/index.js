@@ -78,7 +78,7 @@ function Component() {
         name: "",
         coefficientId: null,
         creditAccountId: null,
-        debitAccountId: null, 
+        debitAccountId: null,
         startDate: null,
         endDate: null,
 
@@ -223,7 +223,7 @@ function Component() {
                 loading={buttonLoading}
                 okText={!isEdiT ? "დამატება" : "შენახვა"}
                 cancelText="გაუქმება"
-                title="კოეფიციენტი"
+                title="კომპონენტი"
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -355,7 +355,7 @@ function Component() {
                         >
                             <Space>
                                 <Space direction="vertical">
-                                <DatePicker defaultValue={moment('2015/01/01', 'YYYY/MM/DD')} onChange={(value) => handleChangeSelect(value,'endDate')} /> 
+                                <DatePicker defaultValue={moment('2015/01/01', 'YYYY/MM/DD')} onChange={(value) => handleChangeSelect(value,'endDate')} />
                                 </Space>
                             </Space>
 
