@@ -127,7 +127,7 @@ function Coefficient() {
 
   const fetchData = async () => {
     // setTableLoading(true);
-    const result = await axios(constants.API_PREFIX+"/api/coefficient");
+    const result = await axios(constants.API_PREFIX + "/api/coefficient");
 
     setDataSaveArray(result.data)
     // setTableLoading(false);
@@ -142,7 +142,7 @@ function Coefficient() {
     setIsEdiT(false);
     if (!isEdiT) {
       console.log("coefficient111", coefficient)
-      const result = await axios.post(constants.API_PREFIX+"/api/Coefficient", coefficient);
+      const result = await axios.post(constants.API_PREFIX + "/api/Coefficient", coefficient);
       if (result.data.isSuccess) {
         fetchData();
         message.success(result.data.message);
@@ -153,7 +153,7 @@ function Coefficient() {
     }
     else {
       console.log("coefficient222", coefficient)
-      const result1 = await axios.put(constants.API_PREFIX+"/api/Coefficient", coefficient);
+      const result1 = await axios.put(constants.API_PREFIX + "/api/Coefficient", coefficient);
       if (result1.data.isSuccess) {
         fetchData();
         message.success(result1.data.message);
@@ -172,6 +172,7 @@ function Coefficient() {
   };
 
   const inputChange = (e) => {
+    // console.log('aaaaaaaaaa')
     // setCoefficient({ ...coefficient, [e.target.name]: e.target.value })
     // setCoefficient({ ...coefficient, [e.target.name]: (e.target.name == "name" || e.target.name=="description")? e.target.value : parseFloat(e.target.value) })
     setCoefficient({ ...coefficient, [e.target.name]: (e.target.name == "name" || e.target.name == "description") ? e.target.value : (isNaN(e.target.value) ? e.target.value : parseFloat(e.target.value)) })
@@ -179,7 +180,7 @@ function Coefficient() {
   }
 
   const confirm = async (record) => {
-    const result = await axios.delete(constants.API_PREFIX+"/api/Coefficient", { data: record });
+    const result = await axios.delete(constants.API_PREFIX + "/api/Coefficient", { data: record });
     if (result.data.isSuccess) {
       message.success(result.data.message);
       fetchData();
@@ -208,7 +209,7 @@ function Coefficient() {
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-        width={600}
+        width={700}
       >
         <Form>
           <Form.Item
@@ -235,21 +236,29 @@ function Coefficient() {
             <Input value={coefficient.description} type="text" name="description" onChange={e => inputChange(e)} />
           </Form.Item>
 
-          <Form.Item onChange={e => inputChange(e)} label="საპენსიო  &nbsp; &nbsp; ">
+
+          <Form.Item onChange={e => inputChange(e)} label="სტანდარტი">
+            {/* <Input.Group compact>
+              <Input type="number" defaultValue="1.0" />
+              <Input type="number" />
+            </Input.Group> */}
             <Input.Group compact>
-            <div className="site-input-number-wrapper">
-              <Input type="number" value={coefficient.sgross} name="sgross" style={{ width: '14%' }} min={1} max={100000} defaultValue="1.0"/>
-              <Input type="number" value={coefficient.snet} name="snet" style={{ width: '14%' }} defaultValue="1.0" />
+              <Input type="number" value={coefficient.sgross} name="sgross" style={{ width: '14%' }} min={-40} max={100000} />
+              <Input type="number" value={coefficient.snet} name="snet" style={{ width: '14%' }} />
               <Input type="number" value={coefficient.spaid} name="spaid" style={{ width: '14%' }} defaultValue="1.0" />
               <Input type="number" value={coefficient.sincomeTax} name="sincomeTax" style={{ width: '14%' }} defaultValue="1.0" />
               <Input type="number" value={coefficient.spension} name="spension" style={{ width: '14%' }} defaultValue="1.0" />
               <Input type="number" value={coefficient.stax1} name="stax1" style={{ width: '14%' }} defaultValue="1.0" />
-              <Input type="number" value={coefficient.stax2} name="stax2" style={{ width: '14%' }} defaultValue="1.0" />
-              </div>
+              {/* <span style={{ display: 'flex', flexDirection: 'column' }}> */}
+                <Input type="number" value={coefficient.stax2} name="stax2" style={{ width: '14%' }} defaultValue="1.0" />
+                {/* <span>test</span>
+              </span> */}
+
+
             </Input.Group>
           </Form.Item>
           <br />
-          <Form.Item onChange={e => inputChange(e)} label="სტანდარტი">
+          <Form.Item onChange={e => inputChange(e)} label="საპენსიო  &nbsp; &nbsp; ">
             <Input.Group compact>
               <Input type="number" value={coefficient.pgross} name="pgross" style={{ width: '14%' }} defaultValue="1.0" />
               <Input type="number" value={coefficient.pnet} name="pnet" style={{ width: '14%' }} defaultValue="1.0" />

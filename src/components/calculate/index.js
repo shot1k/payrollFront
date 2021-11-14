@@ -53,18 +53,35 @@ function Calculate() {
       ),
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      render: (text) => <a>{text}</a>,
+      title: "fullname",
+      dataIndex: "fullname",
+      render: (text, row) => <a>{row.firstName}</a>,
     },
     {
-      title: "Age",
-      dataIndex: "age",
+      title: "დარიცხვის თარიღი",
+      dataIndex: "calculationDate",
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: "Gross",
+      dataIndex: "gross",
     },
+    {
+      title: "Net",
+      dataIndex: "net",
+    },
+    {
+      title: "Paid",
+      dataIndex: "paid",
+    },
+    {
+      title: "IncomeTax",
+      dataIndex: "incomeTax",
+    },
+    {
+      title: "PensionTax",
+      dataIndex: "PensionTax",
+    },
+    
   ];
   // const data = [
   //   {
@@ -117,7 +134,14 @@ function Calculate() {
     fetchDepartments();
   }, []);
 
-  const handleOk = () => {
+  const handleOk = async () => {
+
+    // const myMomentObject = moment(calculationDate, 'YYYY-MM-DD').format('DD-MM-YYYY')
+
+    const result = await axios.post(constants.API_PREFIX + `/api/Calculation/calculate/${calculationDate}`,filter);
+
+    console.log("result calculation---", result.data);
+
     setIsModalVisible(false);
   };
 
