@@ -21,6 +21,9 @@ import {
 import axios from "axios";
 import constants from "../../constant";
 import moment from "moment";
+import { sumBy } from "lodash";
+
+
 const { Option } = Select;
 
 function Calculate() {
@@ -55,7 +58,7 @@ function Calculate() {
     {
       title: "fullname",
       dataIndex: "fullname",
-      render: (text, row) => <a>{row.firstName}</a>,
+      render: (text, row) => <a>{row.firstName} {row.lastName} </a>,
     },
     {
       title: "დარიცხვის თარიღი",
@@ -64,24 +67,29 @@ function Calculate() {
     {
       title: "Gross",
       dataIndex: "gross",
+      render: (text, row) => <p>{sumBy(row.calculations, r => r.gross)} </p>,
     },
     {
       title: "Net",
       dataIndex: "net",
+      render: (text, row) => <p>{sumBy(row.calculations, r => r.net)} </p>,
     },
     {
       title: "Paid",
       dataIndex: "paid",
+      render: (text, row) => <p>{sumBy(row.calculations, r => r.paid)} </p>,
     },
     {
       title: "IncomeTax",
       dataIndex: "incomeTax",
+      render: (text, row) => <p>{sumBy(row.calculations, r => r.incomeTax)} </p>,
     },
     {
       title: "PensionTax",
       dataIndex: "PensionTax",
+      render: (text, row) => <p>{sumBy(row.calculations, r => r.pensionTax)} </p>,
     },
-    
+
   ];
   // const data = [
   //   {
@@ -138,7 +146,7 @@ function Calculate() {
 
     // const myMomentObject = moment(calculationDate, 'YYYY-MM-DD').format('DD-MM-YYYY')
 
-    const result = await axios.post(constants.API_PREFIX + `/api/Calculation/calculate/${calculationDate}`,filter);
+    const result = await axios.post(constants.API_PREFIX + `/api/Calculation/calculate/${calculationDate}`, filter);
 
     console.log("result calculation---", result.data);
 
@@ -231,7 +239,7 @@ function Calculate() {
         <Col span={4}>
           <Select
             defaultValue="აირჩიეთ"
-            style={{ width: 200 }}
+            style={{ width: '100%' }}
             value={filter.departmentId}
           >
             {departments.map((i) => (
@@ -242,9 +250,6 @@ function Calculate() {
             <Option value="tom">Tom</Option> */}
           </Select>
         </Col>
-      </Row>
-      <br />
-      <Row gutter={[16, 24]}>
         <Col span={4}>
           <DatePicker
             //  defaultValue={moment('2022/01/01', 'YYYY/MM/DD')}
@@ -255,20 +260,38 @@ function Calculate() {
             picker="month"
           />
         </Col>
+
+        <Col span={4}>
+          <Button
+            loading={searchLoading}
+            onClick={seach}
+            type="primary"
+            icon={<SearchOutlined />}
+          >
+            Seach
+          </Button>
+        </Col>
+
+      </Row>
+      <br />
+      <Row gutter={[16, 24]}>
+        <Col span={4}>
+          {/* <DatePicker
+            //  defaultValue={moment('2022/01/01', 'YYYY/MM/DD')}
+            // onChange={(value) =>
+            //   handleChangeEmployeeComponentSelect(value, "calculationPeriod")
+            // }
+            onChange={onChangeCalculationPeriod}
+            picker="month"
+          /> */}
+        </Col>
         {/* <Col span={4}><DatePicker onChange={onChange} picker="year" /></Col> */}
         {/* <Col span={4}><Input onChange={handleChangeInput} name="department" placeholder="Department" /></Col> */}
       </Row>
       <br />
       <br />
       <Space>
-        <Button
-          loading={searchLoading}
-          onClick={seach}
-          type="primary"
-          icon={<SearchOutlined />}
-        >
-          Seach
-        </Button>
+
         <Button
           loading={searchLoading}
           onClick={showCalculationModal}
