@@ -31,34 +31,34 @@ function Calculate() {
     {
       title: "Actions",
       dataIndex: "actions",
-      render: (text, record) => (
-        <div>
-          <Space>
-            <Popconfirm
-              title="Are you sure to delete this task?"
-              // onConfirm={() => confirm(record)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Tooltip placement="bottom" title="წაშლა">
-                <Button type="primary" icon={<DeleteOutlined />} />
-              </Tooltip>
-            </Popconfirm>
-            <Tooltip placement="bottom" title="რედაქტირება">
-              <Button
-                onClick={() => clickEdit(record)}
-                type="primary"
-                icon={<EditOutlined />}
-              />
-            </Tooltip>
-          </Space>
-        </div>
-      ),
+      // render: (text, record) => (
+      //   <div>
+      //     <Space>
+      //       <Popconfirm
+      //         title="Are you sure to delete this task?"
+      //         // onConfirm={() => confirm(record)}
+      //         okText="Yes"
+      //         cancelText="No"
+      //       >
+      //         <Tooltip placement="bottom" title="წაშლა">
+      //           <Button type="primary" icon={<DeleteOutlined />} />
+      //         </Tooltip>
+      //       </Popconfirm>
+      //       <Tooltip placement="bottom" title="რედაქტირება">
+      //         <Button
+      //           onClick={() => clickEdit(record)}
+      //           type="primary"
+      //           icon={<EditOutlined />}
+      //         />
+      //       </Tooltip>
+      //     </Space>
+      //   </div>
+      // ),
     },
     {
-      title: "fullname",
-      dataIndex: "fullname",
-      render: (text, row) => <a>{row.firstName} {row.lastName} </a>,
+      title: "name",
+      dataIndex: "name",
+      render: (text, row) => <a>{row.name} </a>,
     },
     {
       title: "დარიცხვის თარიღი",
@@ -67,27 +67,27 @@ function Calculate() {
     {
       title: "Gross",
       dataIndex: "gross",
-      render: (text, row) => <p>{sumBy(row.calculations, r => r.gross)} </p>,
+      render: (text, row) => <p> {row.gross}</p>,
     },
     {
       title: "Net",
       dataIndex: "net",
-      render: (text, row) => <p>{sumBy(row.calculations, r => r.net)} </p>,
+      render: (text, row) => <p>{row.net} </p>,
     },
     {
       title: "Paid",
       dataIndex: "paid",
-      render: (text, row) => <p>{sumBy(row.calculations, r => r.paid)} </p>,
+      render: (text, row) => <p>{row.paid}</p>,
     },
     {
       title: "IncomeTax",
       dataIndex: "incomeTax",
-      render: (text, row) => <p>{sumBy(row.calculations, r => r.incomeTax)} </p>,
+      render: (text, row) => <p>{row.incomeTax}</p>,
     },
     {
       title: "PensionTax",
       dataIndex: "PensionTax",
-      render: (text, row) => <p>{sumBy(row.calculations, r => r.pensionTax)} </p>,
+      render: (text, row) => <p>{row.pensionTax} </p>,
     },
 
   ];
@@ -150,6 +150,7 @@ function Calculate() {
 
     console.log("result calculation---", result.data);
 
+    search();
     setIsModalVisible(false);
   };
 
@@ -177,7 +178,7 @@ function Calculate() {
     // setIsModalVisible(true);
   };
 
-  const seach = async () => {
+  const search = async () => {
     setSearchLoading(true);
 
     console.log("filter", filter);
@@ -187,7 +188,24 @@ function Calculate() {
     );
     console.log("result", result.data);
 
-    setCalculations(result.data);
+    let mapedData = result.data.map(r => ({
+      gross: sumBy(r.calculations, r => r.gross),
+      net: sumBy(r.calculations, r => r.net),
+      paid: sumBy(r.calculations, r => r.paid),
+      incomeTax: sumBy(r.calculations, r => r.incomeTax),
+      pensionTax: sumBy(r.calculations, r => r.pensionTax),
+      name: `${r.firstName} ${r.lastName}`,
+      children: r.calculations.map(c => ({
+        gross: c.gross,
+        net: c.net,
+        paid: c.paid,
+        incomeTax: c.incomeTax,
+        pensionTax: c.pensionTax,
+        calculationDate: moment(c.calculationDate).format('LLL'),
+        name: c.employeeComponent?.component?.name
+      }))
+    }))
+    setCalculations(mapedData);
     setSearchLoading(false);
   };
 
@@ -264,11 +282,11 @@ function Calculate() {
         <Col span={4}>
           <Button
             loading={searchLoading}
-            onClick={seach}
+            onClick={search}
             type="primary"
             icon={<SearchOutlined />}
           >
-            Seach
+            search
           </Button>
         </Col>
 
@@ -323,7 +341,8 @@ function Calculate() {
       <br />
       <br />
 
-      <Table columns={columns} dataSource={calculations} />
+      <Table columns={columns} dataSource={calculations}
+      />
     </div>
   );
 }
