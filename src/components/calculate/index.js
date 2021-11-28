@@ -89,6 +89,21 @@ function Calculate() {
       dataIndex: "PensionTax",
       render: (text, row) => <p>{row.pensionTax} </p>,
     },
+    {
+      title: "RemainingGraceAmount",
+      dataIndex: "remainingGraceAmount",
+      render: (text, row) => <p>{row.remainingGraceAmount} </p>,
+    },
+    {
+      title: "Debit",
+      dataIndex: "Debit",
+      render: (text, row) => <p> </p>,
+    },
+    {
+      title: "Total Balance",
+      dataIndex: "TotalBalance",
+      render: (text, row) => <p> </p>,
+    },
 
   ];
   // const data = [
@@ -194,6 +209,7 @@ function Calculate() {
       paid: sumBy(r.calculations, r => r.paid),
       incomeTax: sumBy(r.calculations, r => r.incomeTax),
       pensionTax: sumBy(r.calculations, r => r.pensionTax),
+      remainingGraceAmount: r.remainingGraceAmount,
       name: `${r.firstName} ${r.lastName}`,
       children: r.calculations.map(c => ({
         gross: c.gross,
