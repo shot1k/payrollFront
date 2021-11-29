@@ -204,6 +204,7 @@ function Calculate() {
     console.log("result", result.data);
 
     let mapedData = result.data.map(r => ({
+      key: r.id,
       gross: sumBy(r.calculations, r => r.gross),
       net: sumBy(r.calculations, r => r.net),
       paid: sumBy(r.calculations, r => r.paid),
@@ -218,7 +219,8 @@ function Calculate() {
         incomeTax: c.incomeTax,
         pensionTax: c.pensionTax,
         calculationDate: moment(c.calculationDate).format('LLL'),
-        name: c.employeeComponent?.component?.name
+        name: c.employeeComponent?.component?.name,
+        remainingGraceAmount: c.remainingGraceAmount,
       }))
     }))
     setCalculations(mapedData);

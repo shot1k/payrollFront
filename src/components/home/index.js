@@ -29,6 +29,7 @@ import AccountsReportChart from '../accountsReportChart/index';
 import EmployeeDetails from '../employee/employeeDetails';
 import EmployeeByDepartment from '../department/employeeByDepartment';
 import Calculate from '../calculate';
+import Logo from '../../1.png';
 
 
 import {
@@ -137,21 +138,23 @@ function Home() {
   return (
     <LayoutAnt>
       <Sider
+        className="site-layout"
         style={{
-          // overflow: 'auto',
-          // position: 'fixed',
-          // left: 0,
-          // height: '100vh',
+          height: "100%",
+          position: "sticky",
+          top: 0,
         }}
         theme="light" trigger={null} collapsible collapsed={collapsed} width={260}
-        >
+      >
         <div className="logo" >
+          {/* <img alt="aaa" style={{width:'100%', height: 'auto'}} src={"http://static1.squarespace.com/static/595bc3af29687ff67d144e54/t/5fff75649475673f7e479897/1610577255521/Payroll+logo.png?format=1500w"} /> */}
+          {/* <img alt="aaa" style={{width:'100%', height: 'auto'}} src={Logo} /> */}
 
         </div>
         <Menu selectedKeys={activeUrl} theme="light" mode="inline"   >
-        <Menu.Item key="8" icon={<CalculatorOutlined />} onClick={clickCalculate}>
-              calculation
-            </Menu.Item>
+          <Menu.Item key="8" icon={<CalculatorOutlined />} onClick={clickCalculate}>
+            calculation
+          </Menu.Item>
           <Menu.Item key="1" icon={<FundOutlined />} onClick={clickcomponent}>
             component
           </Menu.Item>
@@ -178,13 +181,19 @@ function Home() {
             <Menu.Item key="7" icon={<DatabaseOutlined />} onClick={clickDepartment}>
               department
             </Menu.Item>
-           
+
           </SubMenu>
         </Menu>
       </Sider>
 
       <LayoutAnt className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
+        <Header
+          style={{
+            position: 'fixed',
+            zIndex: 1, width: '100%',
+            backgroundColor: '#f5f7f7'
+          }}
+          className="site-layout-background" >
           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
             className: 'trigger',
             onClick: toggle,
@@ -193,8 +202,8 @@ function Home() {
         <Content
           className="site-layout-background"
           style={{
-            // margin: '24px 16px',
-            padding: 24,
+            margin: '85px 16px',
+            padding: 18,
             // minHeight: 280,
             // textAlign: "center"
           }}
