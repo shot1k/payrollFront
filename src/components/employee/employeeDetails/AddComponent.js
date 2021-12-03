@@ -425,6 +425,7 @@ function AddComponent({ employee, setEmployee }) {
             <Table
                 columns={columns}
                 dataSource={employee.employeeComponents}
+                scroll={{ x: 200 }}
             />
         </div>
     );

@@ -114,6 +114,7 @@ function EmployeeTable({ employeeArray, fetchData, showDelete }) {
             <Table
                 columns={columns}
                 dataSource={employeeArray}
+                
             />
         </div>
     );

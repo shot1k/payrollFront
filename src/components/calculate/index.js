@@ -11,6 +11,8 @@ import {
   DatePicker,
   Select,
   Modal,
+  Drawer,
+  Divider
 } from "antd";
 import {
   CalculatorOutlined,
@@ -22,43 +24,41 @@ import axios from "axios";
 import constants from "../../constant";
 import moment from "moment";
 import { sumBy } from "lodash";
+import "./index.css"
+import MyDrawer from "./drawer";
 
 
 const { Option } = Select;
 
 function Calculate() {
+
+  const expandedRowRender = ({ children }) => {
+    const columns = [
+      { title: 'Component Name', dataIndex: 'name', key: 'name' },
+      { title: 'Gross', dataIndex: 'gross', key: 'gross' },
+      { title: 'Net', dataIndex: 'net', key: 'net' },
+      { title: 'Paid', dataIndex: 'paid', key: 'paid' },
+      { title: 'IncomeTax', dataIndex: 'incomeTax', key: 'incomeTax' },
+      { title: 'PensionTax', dataIndex: 'pensionTax', key: 'pensionTax' },
+      { title: 'RemainingGraceAmount', dataIndex: 'remainingGraceAmount', key: 'RemainingGraceAmount' },
+
+    ];
+
+
+    return <Table columns={columns} dataSource={children} pagination={false} />;
+  };
+
+
+
   const columns = [
     {
       title: "Actions",
       dataIndex: "actions",
-      // render: (text, record) => (
-      //   <div>
-      //     <Space>
-      //       <Popconfirm
-      //         title="Are you sure to delete this task?"
-      //         // onConfirm={() => confirm(record)}
-      //         okText="Yes"
-      //         cancelText="No"
-      //       >
-      //         <Tooltip placement="bottom" title="წაშლა">
-      //           <Button type="primary" icon={<DeleteOutlined />} />
-      //         </Tooltip>
-      //       </Popconfirm>
-      //       <Tooltip placement="bottom" title="რედაქტირება">
-      //         <Button
-      //           onClick={() => clickEdit(record)}
-      //           type="primary"
-      //           icon={<EditOutlined />}
-      //         />
-      //       </Tooltip>
-      //     </Space>
-      //   </div>
-      // ),
     },
     {
       title: "name",
       dataIndex: "name",
-      render: (text, row) => <a>{row.name} </a>,
+      render: (text, row) => {return row.key? <a onClick={() => openDraver(row)}>{row.name} </a> :<p>{row.name}</p> },
     },
     {
       title: "დარიცხვის თარიღი",
@@ -106,51 +106,25 @@ function Calculate() {
     },
 
   ];
-  // const data = [
-  //   {
-  //     key: "1",
-  //     name: "John Brown",
-  //     age: 32,
-  //     address: "New York No. 1 Lake Park",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "Jim Green",
-  //     age: 42,
-  //     address: "London No. 1 Lake Park",
-  //   },
-  //   {
-  //     key: "3",
-  //     name: "Joe Black",
-  //     age: 32,
-  //     address: "Sidney No. 1 Lake Park",
-  //   },
-  //   {
-  //     key: "4",
-  //     name: "Disabled User",
-  //     age: 99,
-  //     address: "Sidney No. 1 Lake Park",
-  //   },
-  // ];
 
-  const [isEdiT, setIsEdiT] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
   const [calculations, setCalculations] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [filter, setFilter] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [calculationDate, setCalculationDate] = useState(null);
+  const [visibleDrawer, setVisibleDrawer] = useState(false);
+  const [drawerId, setDrawerId] = useState("");
+
 
   const showCalculationModal = () => {
     setIsModalVisible(true);
   };
   const fetchDepartments = async () => {
-    // setTableLoading(true);
     const result = await axios(constants.API_PREFIX + "/api/department");
 
     console.log("result EmployeeTypes---", result.data);
     setDepartments(result.data);
-    // setTableLoading(false);
   };
 
   useEffect(() => {
@@ -158,8 +132,6 @@ function Calculate() {
   }, []);
 
   const handleOk = async () => {
-
-    // const myMomentObject = moment(calculationDate, 'YYYY-MM-DD').format('DD-MM-YYYY')
 
     const result = await axios.post(constants.API_PREFIX + `/api/Calculation/calculate/${calculationDate}`, filter);
 
@@ -171,26 +143,6 @@ function Calculate() {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-  };
-
-  const confirm = async (record) => {
-    console.log("record", record);
-    // const result = await axios.delete(constants.API_PREFIX+"/api/AccountsReportChart", { data: record });
-    // console.log('result', result)
-    // if (result.data.isSuccess) {
-    //     message.success(result.data.message);
-    //     fetchData();
-    // }
-    // else {
-    //     message.error(result.data.message);
-    // }
-  };
-
-  const clickEdit = (record) => {
-    setIsEdiT(true);
-    console.log("clickEdit", record);
-    // setAccountsReportChart(record);
-    // setIsModalVisible(true);
   };
 
   const search = async () => {
@@ -233,16 +185,6 @@ function Calculate() {
     setFilter({ ...filter, [name]: value });
   };
 
-  // function onChange(date, dateString) {
-  //   console.log(date, dateString);
-  //   setFilter({ ...filter, ['name']: value })
-  // }
-
-  const handleChangeEmployeeComponentSelect = (value, name) => {
-    setFilter({ ...filter, [name]: value });
-    console.log("handleChangeEmployeeComponent111111111s", value);
-  };
-
   const onChangeCalculationPeriod = (date, dateString) => {
     console.log(date, dateString);
     setFilter({ ...filter, ["calculationPeriod"]: dateString });
@@ -253,8 +195,17 @@ function Calculate() {
     setCalculationDate(dateString);
   };
 
+  const openDraver = (row) => {
+    setVisibleDrawer(true);
+    console.log("openDraver", row)
+    setDrawerId(row.key);
+  }
+
   return (
     <div>
+
+      <MyDrawer visibleDrawer={visibleDrawer} setVisibleDrawer={setVisibleDrawer} drawerId={drawerId} />
+
       <Row gutter={[16, 24]}>
         <Col span={4}>
           <Input
@@ -281,17 +232,10 @@ function Calculate() {
             {departments.map((i) => (
               <Option value={i.id}>{i.name}</Option>
             ))}
-            {/* <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option> */}
           </Select>
         </Col>
         <Col span={4}>
           <DatePicker
-            //  defaultValue={moment('2022/01/01', 'YYYY/MM/DD')}
-            // onChange={(value) =>
-            //   handleChangeEmployeeComponentSelect(value, "calculationPeriod")
-            // }
             onChange={onChangeCalculationPeriod}
             picker="month"
           />
@@ -312,17 +256,8 @@ function Calculate() {
       <br />
       <Row gutter={[16, 24]}>
         <Col span={4}>
-          {/* <DatePicker
-            //  defaultValue={moment('2022/01/01', 'YYYY/MM/DD')}
-            // onChange={(value) =>
-            //   handleChangeEmployeeComponentSelect(value, "calculationPeriod")
-            // }
-            onChange={onChangeCalculationPeriod}
-            picker="month"
-          /> */}
+
         </Col>
-        {/* <Col span={4}><DatePicker onChange={onChange} picker="year" /></Col> */}
-        {/* <Col span={4}><Input onChange={handleChangeInput} name="department" placeholder="Department" /></Col> */}
       </Row>
       <br />
       <br />
@@ -350,8 +285,6 @@ function Calculate() {
             </Col>
             <Col span={8}>
             </Col>
-            {/* <Col span={4}><DatePicker onChange={onChange} picker="year" /></Col> */}
-            {/* <Col span={4}><Input onChange={handleChangeInput} name="department" placeholder="Department" /></Col> */}
           </Row>
         </Modal>
       </Space>
@@ -360,6 +293,8 @@ function Calculate() {
       <br />
 
       <Table columns={columns} dataSource={calculations}
+        // expandable={{ expandedRowRender }}
+        scroll={{ x: 200 }}
       />
     </div>
   );
