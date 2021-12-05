@@ -171,7 +171,7 @@ function Calculate() {
         incomeTax: c.incomeTax,
         pensionTax: c.pensionTax,
         calculationDate: moment(c.calculationDate).format('LLL'),
-        name: c.employeeComponent?.component?.name,
+        name: c.employeeComponent?.componentName,
         remainingGraceAmount: c.remainingGraceAmount,
       }))
     }))

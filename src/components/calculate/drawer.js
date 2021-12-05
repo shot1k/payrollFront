@@ -44,7 +44,7 @@ function MyDrawer({ visibleDrawer, setVisibleDrawer, drawerId }) {
 
   const getEmployee = async () => {
     const result = await axios(constants.API_PREFIX + `/api/Employee/getEmployee/${drawerId}`);
-    console.log("result1111", result.data);
+    console.log("result employee", result.data);
 
     setEmployee(result.data)
   }
@@ -113,14 +113,9 @@ function MyDrawer({ visibleDrawer, setVisibleDrawer, drawerId }) {
         <Divider />
 
 
-        <p className="site-description-item-profile-p">Company</p>
+        <p className="site-description-item-profile-p">Components</p>
         <Row>
-          <Col span={12}>
-            <DescriptionItem title="Position" content="Programmer" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Responsibilities" content="Coding" />
-          </Col>
+          {/* {employee.} */}
         </Row>
         <Row>
           <Col span={12}>
