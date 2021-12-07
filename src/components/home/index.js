@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout as LayoutAnt, Menu } from 'antd';
+import { Layout as LayoutAnt, Menu, Select  } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -30,6 +30,8 @@ import EmployeeDetails from '../employee/employeeDetails';
 import EmployeeByDepartment from '../department/employeeByDepartment';
 import Calculate from '../calculate';
 import Logo from '../../1.png';
+import { useTranslation } from "react-i18next";
+
 
 
 import {
@@ -50,6 +52,9 @@ const { Header, Sider, Content } = LayoutAnt;
 
 const { SubMenu } = Menu;
 
+const { Option } = Select;
+
+
 function Home() {
   let history = useHistory();
   let url = useRouteMatch();
@@ -57,6 +62,8 @@ function Home() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [activeUrl, setActiveUrl] = useState([]);
+
+  const {t, i18n } = useTranslation();
 
   useEffect(() => {
     if (location.pathname == '/payroll/component') {
@@ -135,6 +142,12 @@ function Home() {
     setActiveUrl(['8'])
     history.push(`${HOME_PAGE}/calculate`);
   }
+
+  function handleChange(value) {
+    console.log(`selected ${value}`);
+    i18n.changeLanguage(value)
+  }
+
   return (
     <LayoutAnt>
       <Sider
@@ -194,10 +207,25 @@ function Home() {
             backgroundColor: '#f5f7f7'
           }}
           className="site-layout-background" >
-          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-            className: 'trigger',
-            onClick: toggle,
-          })}
+
+          <div style={{ display: "flex", justifyContent:"flex-end" }}>
+
+            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+              className: 'trigger',
+              onClick: toggle,
+            })}
+
+            <div style={{marginRight: 100}}>
+              <Select defaultValue="Ge" style={{ width: 120 }} onChange={handleChange}>
+                <Option value="ge">Ge</Option>
+                <Option value="en">En</Option>
+              </Select>
+            </div>
+            <div >22</div>
+
+          </div>
+
+
         </Header>
         <Content
           className="site-layout-background"

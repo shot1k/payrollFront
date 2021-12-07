@@ -26,12 +26,19 @@ import moment from "moment";
 import { sumBy } from "lodash";
 import "./index.css"
 import MyDrawer from "./drawer";
+import { useTranslation, initReactI18next } from "react-i18next";
+
+
+
 
 
 const { Option } = Select;
 
-function Calculate() {
 
+function Calculate() {
+  
+  const {t} = useTranslation();
+  
   const expandedRowRender = ({ children }) => {
     const columns = [
       { title: 'Component Name', dataIndex: 'name', key: 'name' },
@@ -203,6 +210,7 @@ function Calculate() {
 
   return (
     <div>
+      <h2>{t(`WelcometoReact`)}</h2>
 
       <MyDrawer visibleDrawer={visibleDrawer} setVisibleDrawer={setVisibleDrawer} drawerId={drawerId} />
 
