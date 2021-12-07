@@ -25,6 +25,12 @@ import constants from "../../constant";
 import moment from "moment";
 import { sumBy } from "lodash";
 import "./index.css"
+import { useTranslation, initReactI18next } from "react-i18next";
+import {
+  Link
+} from "react-router-dom"
+
+
 
 
 const DescriptionItem = ({ title, content }) => (
@@ -36,7 +42,41 @@ const DescriptionItem = ({ title, content }) => (
 
 function MyDrawer({ visibleDrawer, setVisibleDrawer, drawerId }) {
 
+  const columns = [
+    {
+      title: 'componentName',
+      dataIndex: 'componentName',
+      key: 'componentName',
+      render: text => <a>{text}</a>,
+    },
+    {
+      title: 'costCenterCode',
+      dataIndex: 'costCenterCode',
+      key: 'costCenterCode',
+    },
+    {
+      title: 'projectCode',
+      dataIndex: 'projectCode',
+      key: 'projectCode',
+    },
+    {
+      title: 'amount',
+      dataIndex: 'amount',
+      key: 'amount',
+    },
+    {
+      title: 'currency',
+      dataIndex: 'currency',
+      key: 'currency',
+    }
+    
+  ];
+
+  const { t } = useTranslation();
+
+
   const [employee, setEmployee] = useState({});
+  const [employeeComponent, setEmployeeComponent] = useState([]);
 
   const onClose = () => {
     setVisibleDrawer(false);
@@ -45,7 +85,7 @@ function MyDrawer({ visibleDrawer, setVisibleDrawer, drawerId }) {
   const getEmployee = async () => {
     const result = await axios(constants.API_PREFIX + `/api/Employee/getEmployee/${drawerId}`);
     console.log("result employee", result.data);
-
+    setEmployeeComponent(result.data.employeeComponents);
     setEmployee(result.data)
   }
 
@@ -66,91 +106,73 @@ function MyDrawer({ visibleDrawer, setVisibleDrawer, drawerId }) {
 
 
         <p className="site-description-item-profile-p" style={{ marginBottom: 24 }}>
-          User Profile
+          {t(`userProfile`)}
         </p>
-        <p className="site-description-item-profile-p">Personal</p>
+        <p className="site-description-item-profile-p">{t(`personal`)}</p>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="Full Name" content={`${employee.firstName} ${employee.lastName}`} />
+            <DescriptionItem title={t(`fullName`)} content={`${employee.firstName} ${employee.lastName}`} />
           </Col>
           <Col span={12}>
-            <DescriptionItem title="Email" content={employee.email} />
+            <DescriptionItem title={t(`email`)} content={employee.email} />
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="PersonalNumber" content={employee.personalNumber} />
+            <DescriptionItem title={t(`mersonalNumber`)} content={employee.personalNumber} />
           </Col>
           <Col span={12}>
-            <DescriptionItem title="MobilePhone" content={employee.mobilePhone} />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <DescriptionItem title="SchemeTypeName" content={employee.schemeTypeName} />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Position" content={employee.position} />
+            <DescriptionItem title={t(`mobilePhone`)} content={employee.mobilePhone} />
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="BankAccountNumber" content={employee.bankAccountNumber} />
+            <DescriptionItem title={t(`schemeTypeName`)} content={employee.schemeTypeName} />
           </Col>
           <Col span={12}>
-            <DescriptionItem title="DepartmentName" content={employee.departmentName} />
+            <DescriptionItem title={t(`position`)} content={employee.position} />
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="GraceAmount" content={employee.graceAmount} />
+            <DescriptionItem title={t(`bankAccountNumber`)} content={employee.bankAccountNumber} />
+          </Col>
+          <Col span={12}>m
+            <DescriptionItem title={t(`departmentName`)} content={employee.departmentName} />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <DescriptionItem title={t(`graceAmount`)} content={employee.graceAmount} />
           </Col>
           <Col span={12}>
             <DescriptionItem title="ResId" content={employee.resId} />
           </Col>
         </Row>
-        
+
         <Divider />
 
 
         <p className="site-description-item-profile-p">Components</p>
-        <Row>
-          {/* {employee.} */}
-        </Row>
-        <Row>
-          <Col span={12}>
-            <DescriptionItem title="Department" content="XTech" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Supervisor" content={<a>Lin</a>} />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <DescriptionItem
-              title="Skills"
-              content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
-            />
-          </Col>
-        </Row>
+        
+
+        <Table columns={columns} dataSource={employeeComponent} />
+
+
         <Divider />
-        <p className="site-description-item-profile-p">Contacts</p>
-        <Row>
-          <Col span={12}>
-            <DescriptionItem title="Email" content="AntDesign@example.com" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Phone Number" content="+86 181 0000 0000" />
-          </Col>
-        </Row>
+
+
+
+        <p className="site-description-item-profile-p">{t(`links`)}</p>
         <Row>
           <Col span={24}>
             <DescriptionItem
-              title="Github"
+              title={t(`edit`)}
               content={
-                <a href="http://github.com/ant-design/ant-design/">
-                  github.com/ant-design/ant-design/
-                </a>
+                // <a href={`Employee/Edit/${employee.id}`}>
+                //   Employee/Edit
+                // </a>
+                <Link to={`Employee/Edit/${employee.id}`}>Payroll/Employee/Edit/{employee.id}</Link>
               }
             />
           </Col>

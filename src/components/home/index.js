@@ -208,20 +208,20 @@ function Home() {
           }}
           className="site-layout-background" >
 
-          <div style={{ display: "flex", justifyContent:"flex-end" }}>
+          <div style={{ display: "flex"}}>
 
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
               onClick: toggle,
             })}
 
-            <div style={{marginRight: 100}}>
-              <Select defaultValue="Ge" style={{ width: 120 }} onChange={handleChange}>
-                <Option value="ge">Ge</Option>
+            <div style={{marginLeft: 50}}>
+              <Select defaultValue="en" style={{ width: 120 }} onChange={handleChange}>
                 <Option value="en">En</Option>
+                <Option value="ge">Ge</Option>
+
               </Select>
             </div>
-            <div >22</div>
 
           </div>
 

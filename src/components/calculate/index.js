@@ -59,16 +59,16 @@ function Calculate() {
 
   const columns = [
     {
-      title: "Actions",
+      title: t(`actions`),
       dataIndex: "actions",
     },
     {
-      title: "name",
+      title: t(`fullName`),
       dataIndex: "name",
       render: (text, row) => {return row.key? <a onClick={() => openDraver(row)}>{row.name} </a> :<p>{row.name}</p> },
     },
     {
-      title: "დარიცხვის თარიღი",
+      title: t(`calculateDate`),
       dataIndex: "calculationDate",
     },
     {
@@ -97,17 +97,17 @@ function Calculate() {
       render: (text, row) => <p>{row.pensionTax} </p>,
     },
     {
-      title: "RemainingGraceAmount",
+      title: t(`RemainingGraceAmount`),
       dataIndex: "remainingGraceAmount",
       render: (text, row) => <p>{row.remainingGraceAmount} </p>,
     },
+    // {
+    //   title: "Debit",
+    //   dataIndex: "Debit",
+    //   render: (text, row) => <p> </p>,
+    // },
     {
-      title: "Debit",
-      dataIndex: "Debit",
-      render: (text, row) => <p> </p>,
-    },
-    {
-      title: "Total Balance",
+      title: t(`totalBalance`),
       dataIndex: "TotalBalance",
       render: (text, row) => <p> </p>,
     },
@@ -210,7 +210,6 @@ function Calculate() {
 
   return (
     <div>
-      <h2>{t(`WelcometoReact`)}</h2>
 
       <MyDrawer visibleDrawer={visibleDrawer} setVisibleDrawer={setVisibleDrawer} drawerId={drawerId} />
 
@@ -220,7 +219,8 @@ function Calculate() {
             onChange={handleChangeInput}
             value={filter?.firstName}
             name="firstName"
-            placeholder="firstName"
+            
+            placeholder = {t(`placeholderFirstName`)}
           />
         </Col>
         <Col span={4}>
@@ -228,12 +228,14 @@ function Calculate() {
             onChange={handleChangeInput}
             value={filter.lastName}
             name="lastName"
-            placeholder="lastName"
+            // placeholder="lastName"
+            placeholder = {t(`placeholderLastName`)}
           />
         </Col>
         <Col span={4}>
           <Select
-            defaultValue="აირჩიეთ"
+            // defaultValue="აირჩიეთ"
+            placeholder = {t(`placeholderChoose`)}
             style={{ width: '100%' }}
             value={filter.departmentId}
           >
@@ -246,6 +248,7 @@ function Calculate() {
           <DatePicker
             onChange={onChangeCalculationPeriod}
             picker="month"
+            placeholder ={t(`placeholderSelectMonth`)}
           />
         </Col>
 
@@ -256,7 +259,7 @@ function Calculate() {
             type="primary"
             icon={<SearchOutlined />}
           >
-            search
+            {t(`buttonSeach`)}
           </Button>
         </Col>
 
@@ -276,20 +279,27 @@ function Calculate() {
           onClick={showCalculationModal}
           icon={<CalculatorOutlined />}
         >
-          Calculate
+          {t(`calculate`)}
         </Button>
 
         <Modal
-          title="კალკულაცია"
+          // title="კალკულაცია"
+          title={t(`calculate`)}
+
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
+          okText={t(`okText`)}
+          cancelText={t(`cancelText`)}
         >
           <Row gutter={[16, 24]}>
             <Col span={8}>
             </Col>
             <Col span={8}>
-              <DatePicker onChange={onChangeCalculationDate} />
+              <DatePicker  
+              onChange={onChangeCalculationDate}
+              placeholder ={t(`placeholderSelectMonth`)}
+               />
             </Col>
             <Col span={8}>
             </Col>
