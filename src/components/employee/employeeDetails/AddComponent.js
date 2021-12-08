@@ -10,6 +10,7 @@ import {
 import './index.css'
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const { Option } = Select;
 
@@ -17,9 +18,12 @@ const { Option } = Select;
 
 function AddComponent({ employee, setEmployee }) {
 
+  const { t } = useTranslation();
+
+
     const columns = [
         {
-            title: 'Actions',
+            title: t(`actions`),
             dataIndex: 'actions',
             render: (text, record, index) =>
                 <div>
@@ -44,12 +48,12 @@ function AddComponent({ employee, setEmployee }) {
 
 
         {
-            title: 'projectCode',
+            title: t(`projectCode`),
             dataIndex: 'projectCode',
             render: (item, row) => <p>{getProjectCode(row)}</p>,
         },
         {
-            title: 'component',
+            title: t(`component`),
             dataIndex: 'component',
             render: (item, row) => <p>{getComponent(row)}</p>,
         },
@@ -59,7 +63,7 @@ function AddComponent({ employee, setEmployee }) {
             render: (item, row) => <p>{getCostCenter(row)}</p>,
         },
         {
-            title: 'payment',
+            title: t(`payment`),
             dataIndex: 'payment',
             render: (item, row) => <p>{getPayment(row)}</p>,
         },
@@ -74,25 +78,25 @@ function AddComponent({ employee, setEmployee }) {
         //     render: text => <p>{moment(text).format('LLL')}</p>,
         // },
         {
-            title: 'scheme',
+            title: t(`scheme`),
             dataIndex: 'scheme',
             render: (item, row) => <p>{getScheme(row)}</p>,
         },
         {
-            title: 'amount',
+            title: t(`amount`),
             dataIndex: 'amount',
         },
         {
-            title: 'currency',
+            title: t(`currency`),
             dataIndex: 'currency',
         },
         {
-            title: 'paidMultiple',
+            title: t(`multiplePayment`),
             dataIndex: 'paidMultiple',
             render: (item, row) => <p>{item ? <CheckOutlined /> : '   '}</p>,
         },
         {
-            title: 'paidByCash',
+            title: t(`paymentByCash`),
             dataIndex: 'paidByCash',
             render: (item, row) => <p>{item ? <CheckOutlined /> : '   '}</p>,
         },
@@ -288,7 +292,7 @@ function AddComponent({ employee, setEmployee }) {
             <Row justify="center">
 
                 <Modal
-                    title="კომპონენტების დამატება"
+                    title={t(`addcomponents`)}
                     visible={isModalVisible}
                     onOk={handleOk}
                     onCancel={handleCancel}
@@ -296,7 +300,7 @@ function AddComponent({ employee, setEmployee }) {
                 >
                     <Row gutter={[16, 30]} >
                         <Col className="gutter-row" span={8}>
-                            <span > პროექტი: </span>
+                            <span > {t(`project`)}: </span>
                             <Select
                                 defaultValue="აირჩიეთ"
                                 style={{ width: 200, marginTop: 5 }}
@@ -313,7 +317,7 @@ function AddComponent({ employee, setEmployee }) {
                             </Select>
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span > კომპონენტი: </span>
+                            <span > {t(`component`)}: </span>
                             <Select
                                 defaultValue="აირჩიეთ"
                                 style={{ width: 200, marginTop: 5 }}
@@ -345,7 +349,7 @@ function AddComponent({ employee, setEmployee }) {
                             </Select>
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span > სქემა: </span>
+                            <span > {t(`scheme`)}: </span>
                             <Select
                                 defaultValue="აირჩიეთ"
                                 style={{ width: 200, marginTop: 5 }}
@@ -362,7 +366,7 @@ function AddComponent({ employee, setEmployee }) {
                         </Col>
 
                         <Col className="gutter-row" span={8}>
-                            <span > გადახდის დღეები: </span>
+                            <span > {t(`paymentDays`)}: </span>
                             <Select
                                 defaultValue="აირჩიეთ"
                                 style={{ width: 200, marginTop: 5 }}
@@ -378,11 +382,11 @@ function AddComponent({ employee, setEmployee }) {
                             </Select>
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span > თანხა: </span>
+                            <span > {t(`amount`)}: </span>
                             <Input type="number" style={{ marginTop: 5 }} value={employeeComponent.amount} name="amount" onChange={e => handleChangeEmployeeComponent(e)} placeholder="თანხა" />
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span > ვალუტა: </span>
+                            <span > {t(`currency`)}: </span>
                             <Select
                                 defaultValue="აირჩიეთ"
                                 value={employeeComponent.currency}
@@ -395,19 +399,19 @@ function AddComponent({ employee, setEmployee }) {
                             </Select>
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span > რამდენჯერმე დარიცხვა: </span>
+                            <span > {t(`multiplePayment`)}: </span>
                             <Checkbox style={{ marginTop: 5 }} value={employeeComponent.paidMultiple} onChange={(e) => onChangeBoolean(e, 'paidMultiple')}>Checkbox</Checkbox>
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span >Paid by cash: </span> <br />
+                            <span >{t(`paymentByCash`)}: </span> <br />
                             <Checkbox value={employeeComponent.paidByCash} onChange={(e) => onChangeBoolean(e, 'paidByCash')}>Checkbox</Checkbox>
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span >დასაწყისი: </span> <br />
+                            <span >{t(`start`)}: </span> <br />
                             <DatePicker value={moment(employeeComponent.startDate, 'YYYY/MM/DD')} style={{ marginTop: 5 }} defaultValue={moment('2021/09/01', 'YYYY/MM/DD')} onChange={(value) => handleChangeEmployeeComponentSelect(value, 'startDate')} />
                         </Col>
                         <Col className="gutter-row" span={8}>
-                            <span >დასასრული: </span> <br />
+                            <span >{t(`finish`)}: </span> <br />
                             <DatePicker value={moment(employeeComponent.endDate, 'YYYY/MM/DD')} style={{ marginTop: 5 }} defaultValue={moment('2022/01/01', 'YYYY/MM/DD')} onChange={(value) => handleChangeEmployeeComponentSelect(value, 'endDate')} />
                         </Col>
 
@@ -418,7 +422,7 @@ function AddComponent({ employee, setEmployee }) {
             </Row>
             <br/>
             <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
-                კომპონენტის დამატება
+            {t(`addcomponents`)}
             </Button>
             <br/>
             <br/>

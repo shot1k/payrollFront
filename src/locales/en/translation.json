@@ -48,6 +48,14 @@
     "seach": "Seach",
     "employeeGraceGroup": "Employee grace group",
     "scheme": "Scheme",
-    "employeeTypes": "Employee types"
+    "employeeTypes": "Employee types",
+    "projectCode": "Project code",
+    "amount": "Amount",
+    "currency": "Currency",
+    "multiplePayment": "Multiple payment",
+    "paymentByCash": "Payment by cash",
+    "payment": "Payment",
+    "addcomponents": "Add components",
+    "paymentDays": "Payment days"
 
 }

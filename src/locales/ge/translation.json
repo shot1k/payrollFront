@@ -48,7 +48,15 @@
     "seach": "ძებნა",
     "employeeGraceGroup": "საშეღავათო თანხის ჯგუფი",
     "scheme": "სქემა",
-    "employeeTypes": "თანამშრომლის ტიპი"
+    "employeeTypes": "თანამშრომლის ტიპი",
+    "projectCode": "პროექტის კოდი",
+    "amount": "თანხა",
+    "currency": "ვალუტა",
+    "multiplePayment": "მრავალჯერადი გადახდა",
+    "paymentByCash": "გადახდა ნაღდი ანგარიშსწორებით",
+    "payment": "გადახდა",
+    "addcomponents": "კომპონენტების დამატება",
+    "paymentDays": "გადახდის დღეები"
 
 
 } 
