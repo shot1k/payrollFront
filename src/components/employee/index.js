@@ -8,8 +8,14 @@ import ImportEmployee from './ImportEmployee';
 import EmployeeTable from './EmployeeTable';
 import axios from "axios";
 import constants from '../../constant'
+import { useTranslation } from "react-i18next";
+
 
 function Employee() {
+
+
+  const { t } = useTranslation();
+
 
   const [dataSaveArray, setDataSaveArray] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -41,12 +47,12 @@ function Employee() {
   return (
     <div>
       <Button type="primary" onClick={add} icon={<PlusCircleOutlined />}>
-        დამატება
+      {t(`add`)}
       </Button>
 
       {/* <Divider /> */}
       <Button style={{ marginLeft: "10px" }} onClick={showModal} icon={<ImportOutlined />} type="primary">
-        იმპორტი
+       {t(`import`)}
       </Button>
       <br />
       <br />

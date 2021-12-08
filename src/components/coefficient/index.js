@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import { PlusCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import axios from "axios";
 import constants from '../../constant'
+import { useTranslation } from "react-i18next";
 
 
 const rowSelection = {
@@ -23,13 +24,17 @@ const rowSelection = {
 };
 
 function Coefficient() {
+
+
+  const { t } = useTranslation();
+
   const columns = [
     // {
     //   title: 'id',
     //   dataIndex: 'id',
     // },
     {
-      title: 'Actions',
+      title:  t(`actions`),
       dataIndex: 'actions',
       render: (text, record) =>
         <div>
@@ -52,12 +57,12 @@ function Coefficient() {
         </div>
     },
     {
-      title: 'სახელი',
+      title: t(`placeholderFirstName`),
       dataIndex: 'name',
       render: text => <a>{text}</a>,
     },
     {
-      title: 'აღწერა',
+      title:  t(`description`),
       dataIndex: 'description',
     },
     {
@@ -81,7 +86,7 @@ function Coefficient() {
       render: (text, row) => <a>{row.sincomeTax}/{row.pincomeTax}</a>,
     },
     {
-      title: 'pension',
+      title: t(`pension`),
       dataIndex: 'spension',
       render: (text, row) => <a>{row.spension}/{row.ppension}</a>,
     },
@@ -200,12 +205,12 @@ function Coefficient() {
   return (
     <div>
       <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
-        დამატება
+      {t(`add`)}
       </Button>
       <Modal
-        title="კოეფიციენტის დამატება"
+        title={t(`addCoefficient`)}
         okText={!isEdiT ? "დამატება" : "შენახვა"}
-        cancelText="გაუქმება"
+        cancelText={t(`cancelText`)}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -213,7 +218,7 @@ function Coefficient() {
       >
         <Form>
           <Form.Item
-            label="სახელი"
+            label={t(`placeholderFirstName`)}
             rules={[
               {
                 required: true,
@@ -225,7 +230,7 @@ function Coefficient() {
           </Form.Item>
 
           <Form.Item
-            label="აღწერა"
+            label={t(`description`)}
             rules={[
               {
                 required: true,
@@ -237,7 +242,7 @@ function Coefficient() {
           </Form.Item>
 
 
-          <Form.Item onChange={e => inputChange(e)} label="სტანდარტი">
+          <Form.Item onChange={e => inputChange(e)} label={t(`standart`)} >
             {/* <Input.Group compact>
               <Input type="number" defaultValue="1.0" />
               <Input type="number" />
@@ -258,7 +263,8 @@ function Coefficient() {
             </Input.Group>
           </Form.Item>
           <br />
-          <Form.Item onChange={e => inputChange(e)} label="საპენსიო  &nbsp; &nbsp; ">
+          {/* &nbsp; &nbsp; */}
+          <Form.Item onChange={e => inputChange(e)} label={t(`pension`)}>
             <Input.Group compact>
               <Input type="number" value={coefficient.pgross} name="pgross" style={{ width: '14%' }} defaultValue="1.0" />
               <Input type="number" value={coefficient.pnet} name="pnet" style={{ width: '14%' }} defaultValue="1.0" />

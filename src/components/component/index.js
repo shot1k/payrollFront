@@ -6,18 +6,23 @@ import { Table, Divider, Select, Modal, Button, message, Form, Input, Space, Pop
 import { PlusCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import axios from "axios";
 import constants from '../../constant'
+import { useTranslation } from "react-i18next";
 
 const { Option } = Select;
 
 
 function Component() {
+
+    const { t } = useTranslation();
+
+
     const columns = [
         // {
         //   title: 'id',
         //   dataIndex: 'id',
         // },
         {
-            title: 'Actions',
+            title: t(`actions`),
             dataIndex: 'actions',
             render: (text, record) =>
                 <div>
@@ -40,34 +45,34 @@ function Component() {
                 </div>
         },
         {
-            title: 'სახელი',
+            title: t(`placeholderFirstName`),
             dataIndex: 'name',
             render: text => <a>{text}</a>,
         },
         {
-            title: 'კოეფიციენტი',
+            title: t(`coefficient`),
             dataIndex: 'coefficientName',
         },
         {
-            title: 'credit Acount',
+            title: t(`creditAcount`),
             dataIndex: 'creditAccountName',
         },
         {
-            title: 'debit Acount',
+            title: t(`debitAcount`),
             dataIndex: 'debitAccountName',
         },
         {
-            title: 'დაწყება',
+            title: t(`start`),
             dataIndex: 'startDate',
             render: text => <p>{moment(text).format('LLL')}</p>,
         },
         {
-            title: 'დასრულება',
+            title: t(`finish`),
             dataIndex: 'endDate',
             render: text => <p>{moment(text).format('LLL')}</p>,
         },
         {
-            title: 'შექმნის თარიღი',
+            title: t(`dateOfCreation`),
             dataIndex: 'dateCreated',
             render: text => <p>{moment(text).format('LLL')}</p>,
         },
@@ -217,13 +222,13 @@ function Component() {
     return (
         <div>
             <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
-                დამატება
+            {t(`add`)}
             </Button>
             <Modal
                 loading={buttonLoading}
                 okText={!isEdiT ? "დამატება" : "შენახვა"}
-                cancelText="გაუქმება"
-                title="კომპონენტი"
+                cancelText={t(`cancelText`)}
+                title={t(`component`)}
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -234,17 +239,17 @@ function Component() {
                         <Space style={{ marginRight: "40px" }}>
 
                             <Form.Item
-                                label="სახელი"
+                                label={t(`placeholderFirstName`)}
                                 rules={[{ required: true }]}
                                 style={{ display: 'inline-block', width: 'calc(100% + 8px)' }}
                             >
-                                <Input value={component.name} type="text" name="name" onChange={e => handleChange(e)} placeholder="სახელი" />
+                                <Input value={component.name} type="text" name="name" onChange={e => handleChange(e)} placeholder={t(`placeholderFirstName`)} />
                             </Form.Item>
                         </Space>
 
 
                         <Form.Item
-                            label="კოეფიციენტები"
+                            label={t(`coefficient`)}
                             style={{
                                 display: 'inline-block',
                                 width: 'calc(50% - 8px)',
@@ -273,7 +278,7 @@ function Component() {
 
 
                         <Form.Item
-                            label="credit Acount"
+                            label={t(`creditAcount`)}
                             style={{
                                 display: 'inline-block',
                                 width: 'calc(50% - 8px)',
@@ -300,7 +305,7 @@ function Component() {
                             </Select>
                         </Form.Item>
                         <Form.Item
-                            label="debit Debit"
+                            label={t(`debitAcount`)}
                             style={{
                                 display: 'inline-block',
                                 width: 'calc(50% - 8px)',
@@ -330,7 +335,7 @@ function Component() {
 
 
                         <Form.Item
-                            label="დაწყება"
+                            label={t(`start`)}
                             style={{
                                 display: 'inline-block',
                                 width: 'calc(50% - 8px)',
@@ -346,7 +351,7 @@ function Component() {
                         </Form.Item>
 
                         <Form.Item
-                            label="დასრულება"
+                            label={t(`finish`)}
                             style={{
                                 display: 'inline-block',
                                 width: 'calc(50% - 8px)',

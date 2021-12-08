@@ -5,12 +5,16 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import axios from "axios";
 import constants from '../../constant'
 import { HOME_PAGE } from '../../constant';
+import { useTranslation } from "react-i18next";
 
 function EmployeeTable({ employeeArray, fetchData, showDelete }) {
 
+  const { t } = useTranslation();
+
+
     const columns = [
         {
-            title: 'Actions',
+            title: t(`actions`),
             dataIndex: 'actions',
             render: (text, record) =>
                 <div>
@@ -42,27 +46,27 @@ function EmployeeTable({ employeeArray, fetchData, showDelete }) {
             dataIndex: 'resId',
         },
         {
-            title: 'სახელი',
+            title: t(`placeholderFirstName`),
             dataIndex: 'firstName',
         },
         {
-            title: 'გვარი',
+            title: t(`placeholderLastName`),
             dataIndex: 'lastName',
         },
         {
-            title: 'ტელეფონის ნომერი',
+            title: t(`mobilePhone`),
             dataIndex: 'mobilePhone',
         },
         {
-            title: 'email',
+            title: t(`email`),
             dataIndex: 'email',
         },
         {
-            title: 'personalNumber',
+            title: t(`personalNumber`),
             dataIndex: 'personalNumber',
         },
         {
-            title: 'address',
+            title: t(`address`),
             dataIndex: 'address',
         },
     ];

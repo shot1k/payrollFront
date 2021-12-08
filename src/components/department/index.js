@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
 import 'antd/dist/antd.css';
@@ -9,10 +9,14 @@ import constants from '../../constant'
 import {
   Link
 } from "react-router-dom"
+import { useTranslation } from "react-i18next";
 
 
 function Department() {
   // const {globalDepartments} = useContext(UserContext);
+
+  const { t } = useTranslation();
+
 
   const [department, setDepartment] = useState({
     name: ""
@@ -22,7 +26,7 @@ function Department() {
 
   const columns = [
     {
-      title: 'Actions',
+      title: t(`actions`),
       dataIndex: 'actions',
       render: (text, record) =>
         <div>
@@ -49,16 +53,16 @@ function Department() {
     //   dataIndex: 'id',
     // },
     {
-      title: 'სახელი',
+      title: t(`placeholderFirstName`),
       dataIndex: 'name',
     },
     {
-      title: 'რაოდენობა',
+      title: t(`quantity`),
       dataIndex: 'employeeCount',
       render: (text, record) =><Link to={`EmployeeByDepartment/${record.id}`}>{text}</Link>
     },
     {
-      title: 'შექმნის თარიღი',
+      title: t(`dateOfCreation`),
       dataIndex: 'dateCreated',
       render: text => <p>{moment(text).format('LLL')}</p>,
     },
@@ -167,20 +171,20 @@ function Department() {
       {/* <h2>{`department ${globalDepartments} again!`}</h2> */}
 
       <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
-        დამატება
+      {t(`add`)}
       </Button>
       <Modal
         loading={buttonLoading}
         okText={!isEdiT ? "დამატება" : "შენახვა"}
-        cancelText="გაუქმება"
-        title="დეპარტამენტი"
+        cancelText={t(`cancelText`)}
+        title={t(`department`)}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form>
           <Form.Item
-            label="სახელი"
+            label={t(`placeholderFirstName`)}
             rules={[
               {
                 required: true,

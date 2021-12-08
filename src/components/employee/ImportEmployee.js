@@ -3,9 +3,17 @@ import { Input, Table, Modal, Button, Row, Col, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import axios from "axios";
 import constants from '../../constant'
+import { useTranslation } from "react-i18next";
 
 
-const importUsersColumns = [
+
+
+function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
+
+
+  const { t } = useTranslation();
+
+  const importUsersColumns = [
     {
         title: 'Id',
         dataIndex: 'id',
@@ -16,20 +24,19 @@ const importUsersColumns = [
         dataIndex: 'resId',
     },
     {
-        title: 'FirstName',
+        title: t(`placeholderFirstName`),
         dataIndex: 'firstName',
     },
     {
-        title: 'SurName',
+        title: t(`placeholderLastName`),
         dataIndex: 'surName',
     },
     {
-        title: 'adres1',
+        title: t(`address`),
         dataIndex: 'adres1',
     }
 ];
 
-function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
 
 
     const [importArray, setImportArray] = useState([]);
@@ -108,13 +115,13 @@ function ImportEmployee({ isModalVisible, setIsModalVisible, fetchData }) {
 
     return (
         <div>
-            <Modal width={700} title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <Modal width={700} title={t(`import`)} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} cancelText={t(`cancelText`)}>
 
                 <Row gutter={[16, 24]}>
                     <Col span={6}><Input value={filter.resId} onChange={handleChangeInput} name="resId" type="number" placeholder="ResId" /></Col>
-                    <Col span={6}><Input value={filter.firstName} onChange={handleChangeInput} name="firstName" placeholder="FirstName" /></Col>
-                    <Col span={6}><Input value={filter.surName} onChange={handleChangeInput} name="surName" placeholder="SurName" /></Col>
-                    <Col span={6}><Button loading={searchLoading} onClick={seach} type="primary" icon={<SearchOutlined />}>seach</Button></Col>
+                    <Col span={6}><Input value={filter.firstName} onChange={handleChangeInput} name="firstName" placeholder={t(`placeholderFirstName`)} /></Col>
+                    <Col span={6}><Input value={filter.surName} onChange={handleChangeInput} name="surName" placeholder={t(`placeholderLastName`)} /></Col>
+                    <Col span={6}><Button loading={searchLoading} onClick={seach} type="primary" icon={<SearchOutlined />}>{t(`seach`)}</Button></Col>
                 </Row>
                 <br />
                 <Table

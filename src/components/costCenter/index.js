@@ -7,16 +7,22 @@ import { Modal, Button, message, Form, Input, Space, Popconfirm, Tooltip } from 
 import { PlusCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import axios from "axios";
 import constants from '../../constant'
+import { useTranslation } from "react-i18next";
 
 
 function CostCenter() {
+
+  const { t } = useTranslation();
+
+
+
   const columns = [
     // {
     //   title: 'id',
     //   dataIndex: 'id',
     // },
     {
-      title: 'Actions',
+      title: t(`actions`),
       dataIndex: 'actions',
       render: (text, record) =>
         <div>
@@ -39,16 +45,16 @@ function CostCenter() {
         </div>
     },
     {
-      title: 'კოდი',
+      title: t(`code`),
       dataIndex: 'code',
       render: text => <a>{text}</a>,
     },
     {
-      title: 'აღწერა',
+      title: t(`description`),
       dataIndex: 'description',
     },
     {
-      title: 'შექმნის თარიღი',
+      title: t(`dateOfCreation`),
       dataIndex: 'dateCreated',
       render: text => <p>{moment(text).format('LLL')}</p>,
     },
@@ -155,13 +161,13 @@ function CostCenter() {
   return (
     <div>
       <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
-        დამატება
+      {t(`add`)}
       </Button>
       <Modal
         loading={buttonLoading}
         okText={!isEdiT ? "დამატება" : "შენახვა"}
-        cancelText="გაუქმება"
-        title="პროექტი"
+        cancelText={t(`cancelText`)}
+        title={t(`project`)}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -170,22 +176,22 @@ function CostCenter() {
         <Form>
           <Form.Item>
             <Form.Item
-              label="კოდი"
+              label={t(`code`)}
               rules={[{ required: true }]}
               style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
             >
-              <Input value={costCenter.code} type="text" name="code" onChange={e => handleChange(e)} placeholder="კოდი" />
+              <Input value={costCenter.code} type="text" name="code" onChange={e => handleChange(e)} placeholder={t(`code`)} />
             </Form.Item>
 
             {/* </Form.Item>
 
           <Form.Item style={{ marginBottom: 0 }}> */}
             <Form.Item
-              label="აღწერა"
+              label={t(`description`)}
               rules={[{ required: true }]}
               style={{ display: 'inline-block', width: 'calc(50% - 8px)', marginLeft: "10px" }}
             >
-              <Input value={costCenter.description} type="text" name="description" onChange={e => handleChange(e)} placeholder="აღწერა" />
+              <Input value={costCenter.description} type="text" name="description" onChange={e => handleChange(e)} placeholder={t(`description`)} />
             </Form.Item>
 
           </Form.Item>

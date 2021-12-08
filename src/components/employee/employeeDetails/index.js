@@ -25,10 +25,18 @@ import "./index.css";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
 import AddComponent from "./AddComponent";
+import { useTranslation } from "react-i18next";
+
 
 const { Option } = Select;
 
 function EmployeeDetails() {
+
+
+  const { t } = useTranslation();
+
+
+
     const [form] = Form.useForm();
     let { id } = useParams();
     let history = useHistory();
@@ -280,7 +288,7 @@ function EmployeeDetails() {
                 >
                     <Row>
                         <Col span={6}>
-                            <Form.Item label="Name" rules={requiredFieldRule}>
+                            <Form.Item label={t(`placeholderFirstName`)} rules={requiredFieldRule}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.firstName}
@@ -288,7 +296,7 @@ function EmployeeDetails() {
                                     onChange={(e) => handleChange(e)}
                                 />
                             </Form.Item>
-                            <Form.Item label="Lastname">
+                            <Form.Item label={t(`placeholderLastName`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.lastName}
@@ -314,7 +322,7 @@ function EmployeeDetails() {
                             </Form.Item>
                         </Col>
                         <Col span={6}>
-                            <Form.Item label="MobilePhone">
+                            <Form.Item label={t(`mobilePhone`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.mobilePhone}
@@ -322,7 +330,7 @@ function EmployeeDetails() {
                                     onChange={(e) => handleChange(e)}
                                 />
                             </Form.Item>
-                            <Form.Item label="Email">
+                            <Form.Item label={t(`email`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.email}
@@ -330,7 +338,7 @@ function EmployeeDetails() {
                                     onChange={(e) => handleChange(e)}
                                 />
                             </Form.Item>
-                            <Form.Item label="PersonalNumber">
+                            <Form.Item label={t(`personalNumber`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.personalNumber}
@@ -339,7 +347,7 @@ function EmployeeDetails() {
                                 />
                             </Form.Item>
 
-                            <Form.Item label="EmployeeGraceTypes">
+                            <Form.Item label={t(`employeeGraceGroup`)}>
                                 <Select
                                     disabled={employee.resId != null}
                                     defaultValue="აირჩიეთ"
@@ -355,7 +363,7 @@ function EmployeeDetails() {
                             </Form.Item>
                         </Col>
                         <Col span={6}>
-                            <Form.Item label="Address">
+                            <Form.Item label={t(`address`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.address}
@@ -363,7 +371,7 @@ function EmployeeDetails() {
                                     onChange={(e) => handleChange(e)}
                                 />
                             </Form.Item>
-                            <Form.Item label="BankAccountNumber">
+                            <Form.Item label={t(`bankAccountNumber`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.bankAccountNumber}
@@ -371,7 +379,7 @@ function EmployeeDetails() {
                                     onChange={(e) => handleChange(e)}
                                 />
                             </Form.Item>
-                            <Form.Item label="Scheme">
+                            <Form.Item label={t(`scheme`)}>
                                 <Select
                                     disabled={employee.resId != null}
                                     defaultValue="აირჩიეთ"
@@ -386,7 +394,7 @@ function EmployeeDetails() {
                                 </Select>
                             </Form.Item>
 
-                            <Form.Item label="graceAmount">
+                            <Form.Item label={t(`graceAmount`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     type="number"
@@ -397,7 +405,7 @@ function EmployeeDetails() {
                             </Form.Item>
                         </Col>
                         <Col span={6}>
-                            <Form.Item label="DepartmentName">
+                            <Form.Item label={t(`departmentName`)}>
                                 <Select
                                     disabled={employee.resId != null}
                                     defaultValue="აირჩიეთ"
@@ -411,7 +419,7 @@ function EmployeeDetails() {
                                     ))}
                                 </Select>
                             </Form.Item>
-                            <Form.Item label="Position">
+                            <Form.Item label={t(`position`)}>
                                 <Input
                                     disabled={employee.resId != null}
                                     value={employee.position}
@@ -420,7 +428,7 @@ function EmployeeDetails() {
                                 />
                             </Form.Item>
 
-                            <Form.Item label="EmployeeTypes">
+                            <Form.Item label={t(`employeeTypes`)}>
                                 <Select
                                     disabled={employee.resId != null}
                                     defaultValue="აირჩიეთ"
@@ -435,7 +443,7 @@ function EmployeeDetails() {
                                 </Select>
                             </Form.Item>
 
-                            <Form.Item label="remainingGraceAmount">
+                            <Form.Item label={t(`remainingGraceAmount`)}>
                                 <Input
                                     disabled
                                     type="number"

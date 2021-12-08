@@ -5,19 +5,26 @@ import 'antd/dist/antd.css';
 import { Table, Divider, Select, Modal, Button, message, Form, Input, Space, Popconfirm, Tooltip } from 'antd';
 import { PlusCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import axios from "axios";
-import constants from '../../constant'
+import constants from '../../constant';
+import { useTranslation } from "react-i18next";
+
 
 const { Option } = Select;
 
 
 function AccountsReportChart() {
+
+    const {t} = useTranslation();
+
+
+
     const columns = [
         // {
         //   title: 'id',
         //   dataIndex: 'id',
         // },
         {
-            title: 'Actions',
+            title: t(`actions`),
             dataIndex: 'actions',
             render: (text, record) =>
                 <div>
@@ -40,20 +47,20 @@ function AccountsReportChart() {
                 </div>
         },
         {
-            title: 'კოდი',
+            title: t(`code`),
             dataIndex: 'code',
             render: text => <a>{text}</a>,
         },
         {
-            title: 'აღწერა',
+            title: t(`description`),
             dataIndex: 'description',
         },
         {
-            title: 'ტიპი',
+            title: t(`type`),
             dataIndex: 'accountsReportChartTypeName',
         },
         {
-            title: 'შექმნის თარიღი',
+            title: t(`dateOfCreation`),
             dataIndex: 'dateCreated',
             render: text => <p>{moment(text).format('LLL')}</p>,
         },
@@ -185,13 +192,13 @@ function AccountsReportChart() {
     return (
         <div>
             <Button type="primary" onClick={showModal} icon={<PlusCircleOutlined />}>
-                დამატება
+            {t(`add`)}
             </Button>
             <Modal
                 loading={buttonLoading}
                 okText={!isEdiT ? "დამატება" : "შენახვა"}
-                cancelText="გაუქმება"
-                title="ანგარიშთა გეგმის ანგარიში"
+                cancelText={t(`cancelText`)}
+                title={t(`chartOfAccountsReport`)}
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -202,17 +209,17 @@ function AccountsReportChart() {
                         <Space style={{ marginRight: "40px" }}>
 
                             <Form.Item
-                                label="კოდი"
+                                label={t(`code`)}
                                 rules={[{ required: true }]}
                                 style={{ display: 'inline-block', width: 'calc(100% + 8px)' }}
                             >
-                                <Input value={accountsReportChart.code} type="text" name="code" onChange={e => handleChange(e)} placeholder="კოდი" />
+                                <Input value={accountsReportChart.code} type="text" name="code" onChange={e => handleChange(e)} placeholder={t(`code`)} />
                             </Form.Item>
                         </Space>
 
 
                         <Form.Item
-                            label="ანგარიშთა გეგმა"
+                            label={t(`accountsPlan`)}
                             style={{
                                 display: 'inline-block',
                                 width: 'calc(50% - 8px)',
@@ -246,7 +253,7 @@ function AccountsReportChart() {
                             // style={{ display: 'inline-block', width: 'calc(50% - 8px)', marginLeft: "10px" }}
                             style={{ marginBottom: 0 }}
                         >
-                            <TextArea placeholder="აღწერა..." value={accountsReportChart.description} type="text" name="description" onChange={e => handleChange(e)} placeholder="აღწერა" />
+                            <TextArea placeholder="აღწერა..." value={accountsReportChart.description} type="text" name="description" onChange={e => handleChange(e)} placeholder={t(`description`)} />
                         </Form.Item>
 
 

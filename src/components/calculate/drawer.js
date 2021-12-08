@@ -25,7 +25,7 @@ import constants from "../../constant";
 import moment from "moment";
 import { sumBy } from "lodash";
 import "./index.css"
-import { useTranslation, initReactI18next } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import {
   Link
 } from "react-router-dom"
