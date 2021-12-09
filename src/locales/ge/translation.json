@@ -56,7 +56,9 @@
     "paymentByCash": "გადახდა ნაღდი ანგარიშსწორებით",
     "payment": "გადახდა",
     "addcomponents": "კომპონენტების დამატება",
-    "paymentDays": "გადახდის დღეები"
-
+    "paymentDays": "გადახდის დღეები",
+    "calculation": "კალკულაცია",
+    "employee": "თანამშრომელი",
+    "costCenter": "CostCenter"
 
 } 

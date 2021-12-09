@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout as LayoutAnt, Menu, Select  } from 'antd';
+import { Layout as LayoutAnt, Menu, Select } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -63,7 +63,7 @@ function Home() {
   const [collapsed, setCollapsed] = useState(false);
   const [activeUrl, setActiveUrl] = useState([]);
 
-  const {t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (location.pathname == '/payroll/component') {
@@ -166,33 +166,33 @@ function Home() {
         </div>
         <Menu selectedKeys={activeUrl} theme="light" mode="inline"   >
           <Menu.Item key="8" icon={<CalculatorOutlined />} onClick={clickCalculate}>
-            calculation
+            {t(`calculation`)}
           </Menu.Item>
           <Menu.Item key="1" icon={<FundOutlined />} onClick={clickcomponent}>
-            component
+            {t(`component`)}
           </Menu.Item>
           <Menu.Item key="2" icon={<FunctionOutlined />} onClick={clickCoefficient} >
-            coefficient
+            {t(`coefficient`)}
           </Menu.Item>
           {/* <Menu.Item key="4" icon={<AccountBookOutlined />} onClick={clickAccountPlan}>
           accountPlan
           </Menu.Item> */}
           <Menu.Item key="3" icon={<UsergroupAddOutlined />} onClick={clickEmployee}>
-            employee
+            {t(`employee`)}
           </Menu.Item>
 
           <SubMenu key="sub1" title="Setting" icon={<SettingOutlined />}>
             <Menu.Item key="4" icon={<ProjectOutlined />} onClick={clickProject}>
-              project
+              {t(`project`)}
             </Menu.Item>
             <Menu.Item key="5" icon={<StrikethroughOutlined />} onClick={clickCostCenter}>
-              costCenter
+              {t(`costCenter`)}
             </Menu.Item>
             <Menu.Item key="6" icon={<DiffOutlined />} onClick={clickAccountsReportChart}>
               accountsReportChart
             </Menu.Item>
             <Menu.Item key="7" icon={<DatabaseOutlined />} onClick={clickDepartment}>
-              department
+              {t(`department`)}
             </Menu.Item>
 
           </SubMenu>
@@ -208,14 +208,19 @@ function Home() {
           }}
           className="site-layout-background" >
 
-          <div style={{ display: "flex"}}>
+
+
+          {/* <div style={{ display: "flex"}}> */}
 
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
               onClick: toggle,
             })}
 
-            <div style={{marginLeft: 50}}>
+
+
+
+            <div style={{ float: 'right', marginRight: 300 }}>
               <Select defaultValue="en" style={{ width: 120 }} onChange={handleChange}>
                 <Option value="en">En</Option>
                 <Option value="ge">Ge</Option>
@@ -223,7 +228,7 @@ function Home() {
               </Select>
             </div>
 
-          </div>
+          {/* </div> */}
 
 
         </Header>
@@ -236,6 +241,11 @@ function Home() {
             // textAlign: "center"
           }}
         >
+
+
+
+
+
           <Switch>
             <Route exact path="/">
               <Redirect to={`${HOME_PAGE}/component`} />
