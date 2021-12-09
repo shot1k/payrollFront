@@ -56,6 +56,8 @@
     "paymentByCash": "Payment by cash",
     "payment": "Payment",
     "addcomponents": "Add components",
-    "paymentDays": "Payment days"
-
+    "paymentDays": "Payment days",
+    "calculation": "Calculation",
+    "employee": "Employee",
+    "costCenter": "CostCenter"
 }
