@@ -2,20 +2,24 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout as LayoutAnt, Menu, Select } from 'antd';
+import { Layout as LayoutAnt, Select, Avatar, Menu, Dropdown, Space, Divider } from 'antd';
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   FunctionOutlined,
   DatabaseOutlined,
   FundOutlined,
-  AccountBookOutlined,
   CalculatorOutlined,
   ProjectOutlined,
   StrikethroughOutlined,
   SettingOutlined,
   DiffOutlined,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
+  GlobalOutlined,
+  UserOutlined,
+  UnlockOutlined,
+  LogoutOutlined
 } from '@ant-design/icons';
 
 import Component from '../component/index';
@@ -29,7 +33,6 @@ import AccountsReportChart from '../accountsReportChart/index';
 import EmployeeDetails from '../employee/employeeDetails';
 import EmployeeByDepartment from '../department/employeeByDepartment';
 import Calculate from '../calculate';
-import Logo from '../../1.png';
 import { useTranslation } from "react-i18next";
 
 
@@ -46,6 +49,10 @@ import {
 
 import { useHistory } from "react-router-dom";
 import { HOME_PAGE } from '../../constant';
+import GE from '../../assets/logos/ge.png'; // with import
+import EN from '../../assets/logos/en.png'; // with import
+import RU from '../../assets/logos/ru.png'; // with import
+
 
 const { Header, Sider, Content } = LayoutAnt;
 
@@ -148,6 +155,47 @@ function Home() {
     i18n.changeLanguage(value)
   }
 
+  const languageMenu = (
+    <Menu>
+      <Menu.Item>
+        <Space>
+          <img width={25} height={20} src={GE} /> <span>Gergian</span>
+        </Space>
+      </Menu.Item>
+      <Menu.Item  >
+        <Space>
+          <img width={25} height={20} src={EN} /> <span>English</span>
+        </Space>
+      </Menu.Item>
+      <Menu.Item>
+        <Space>
+          <img width={25} height={20} src={RU} /> <span>Russian</span>
+        </Space>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const userMenu = (
+    <Menu>
+      <Menu.Item>
+        <Space>
+          <UserOutlined /> Settings
+        </Space>
+      </Menu.Item>
+      <Menu.Item  >
+        <Space>
+          <UnlockOutlined />Change Password
+        </Space>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item>
+        <Space>
+          <LogoutOutlined />Log Out
+        </Space>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <LayoutAnt>
       <Sider
@@ -202,7 +250,7 @@ function Home() {
       <LayoutAnt className="site-layout">
         <Header
           style={{
-            position: 'fixed',
+            // position: 'fixed',
             zIndex: 1, width: '100%',
             backgroundColor: '#f5f7f7'
           }}
@@ -212,21 +260,38 @@ function Home() {
 
           {/* <div style={{ display: "flex"}}> */}
 
-            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-              className: 'trigger',
-              onClick: toggle,
-            })}
+          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+            className: 'trigger',
+            onClick: toggle,
+          })}
 
 
 
 
-            <div style={{ float: 'right', marginRight: 300 }}>
-              <Select defaultValue="en" style={{ width: 120 }} onChange={handleChange}>
-                <Option value="en">En</Option>
-                <Option value="ge">Ge</Option>
+          <div style={{ float: 'right', right: 0 }}>
+            {/* <Select defaultValue="en" style={{ width: 120 }} onChange={handleChange}>
+              <Option value="en">En</Option>
+              <Option value="ge">Ge</Option>
 
-              </Select>
-            </div>
+            </Select> */}
+
+            <Space size={'large'}>
+              <Dropdown overlay={userMenu}>
+                <div style={{ cursor: 'pointer' }}>
+                  <Space>
+                    <Avatar size={32} icon={<UserOutlined />} overlay={languageMenu} />
+                    <span>Avtandil</span>
+                  </Space>
+                </div>
+              </Dropdown>
+
+              <Dropdown overlay={languageMenu}>
+                <div className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                  <GlobalOutlined style={{ fontSize: '23px', color: '#1f91ff', cursor: 'pointer' }} />
+                </div>
+              </Dropdown>
+            </Space>
+          </div>
 
           {/* </div> */}
 
@@ -235,8 +300,8 @@ function Home() {
         <Content
           className="site-layout-background"
           style={{
-            margin: '85px 16px',
-            padding: 18,
+            margin: '35px 16px',
+            // padding: 18,
             // minHeight: 280,
             // textAlign: "center"
           }}
