@@ -181,7 +181,7 @@ function Home() {
             {t(`employee`)}
           </Menu.Item>
 
-          <SubMenu key="sub1" title="Setting" icon={<SettingOutlined />}>
+          <SubMenu key="sub1" title={t(`setting`)} icon={<SettingOutlined />}>
             <Menu.Item key="4" icon={<ProjectOutlined />} onClick={clickProject}>
               {t(`project`)}
             </Menu.Item>

@@ -59,5 +59,6 @@
     "paymentDays": "Payment days",
     "calculation": "Calculation",
     "employee": "Employee",
-    "costCenter": "CostCenter"
+    "costCenter": "CostCenter",
+    "setting": "Setting"
 }
