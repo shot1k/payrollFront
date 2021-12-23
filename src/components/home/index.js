@@ -2,20 +2,24 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout as LayoutAnt, Menu, Select } from 'antd';
+import { Layout as LayoutAnt, Select, Avatar, Menu, Dropdown, Space, Divider } from 'antd';
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   FunctionOutlined,
   DatabaseOutlined,
   FundOutlined,
-  AccountBookOutlined,
   CalculatorOutlined,
   ProjectOutlined,
   StrikethroughOutlined,
   SettingOutlined,
   DiffOutlined,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
+  GlobalOutlined,
+  UserOutlined,
+  UnlockOutlined,
+  LogoutOutlined
 } from '@ant-design/icons';
 
 import Component from '../component/index';
@@ -29,7 +33,7 @@ import AccountsReportChart from '../accountsReportChart/index';
 import EmployeeDetails from '../employee/employeeDetails';
 import EmployeeByDepartment from '../department/employeeByDepartment';
 import Calculate from '../calculate';
-import Logo from '../../1.png';
+import Dashboard from '../dashboard';
 import { useTranslation } from "react-i18next";
 
 
@@ -46,6 +50,10 @@ import {
 
 import { useHistory } from "react-router-dom";
 import { HOME_PAGE } from '../../constant';
+import GE from '../../assets/logos/ge.png'; // with import
+import EN from '../../assets/logos/en.png'; // with import
+import RU from '../../assets/logos/ru.png'; // with import
+
 
 const { Header, Sider, Content } = LayoutAnt;
 
@@ -94,6 +102,9 @@ function Home() {
     if (location.pathname == '/payroll/calculate') {
       setActiveUrl(['8']);
     }
+    if (location.pathname == '/payroll/dashboard') {
+      setActiveUrl(['9']);
+    }
 
   }, []);
 
@@ -101,52 +112,58 @@ function Home() {
     setCollapsed(!collapsed)
   };
 
-  const clickcomponent = () => {
-    setActiveUrl(['1'])
-    history.push(`${HOME_PAGE}/component`);
+  
+  const ClickGoPage = (e, name) =>{
+    console.log("ClickGoPage",  e.key, name)
+    // setActiveUrl({name: e.key})
+    setActiveUrl([e.key])
+    history.push(`${HOME_PAGE}/${name}`);
   }
 
-  const clickCoefficient = () => {
-    setActiveUrl(['2'])
-    history.push(`${HOME_PAGE}/coefficient`);
+  const handleChange = ({key}) => {
+    i18n.changeLanguage(key)
   }
 
-  // const clickAccountPlan = () => {
-  //   setActiveUrl(['4'])
-  //   history.push(`${HOME_PAGE}/accountPlan`);
-  // }
+  const languageMenu = (
+    <Menu onClick={handleChange}>
+      <Menu.Item key="ge">
+        <Space>
+          <img width={25} height={20} alt='GE' src={GE} /> <span>Georgian</span>
+        </Space>
+      </Menu.Item>
+      <Menu.Item key="en" >
+        <Space>
+          <img width={25} height={20} alt='EN' src={EN} /> <span>English</span>
+        </Space>
+      </Menu.Item>
+      <Menu.Item key="ru">
+        <Space>
+          <img width={25} height={20} alt='RU' src={RU} /> <span>Russian</span>
+        </Space>
+      </Menu.Item>
+    </Menu>
+  );
 
-  const clickEmployee = () => {
-    setActiveUrl(['3'])
-    history.push(`${HOME_PAGE}/employee`);
-  }
-  const clickProject = () => {
-    setActiveUrl(['4'])
-    history.push(`${HOME_PAGE}/project`);
-  }
-  const clickCostCenter = () => {
-    setActiveUrl(['5'])
-    history.push(`${HOME_PAGE}/costCenter`);
-  }
-  const clickAccountsReportChart = () => {
-    setActiveUrl(['6'])
-    history.push(`${HOME_PAGE}/accountsReportChart`);
-  }
-
-  const clickDepartment = () => {
-    setActiveUrl(['7'])
-    history.push(`${HOME_PAGE}/department`);
-  }
-
-  const clickCalculate = () => {
-    setActiveUrl(['8'])
-    history.push(`${HOME_PAGE}/calculate`);
-  }
-
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-    i18n.changeLanguage(value)
-  }
+  const userMenu = (
+    <Menu>
+      <Menu.Item>
+        <Space>
+          <UserOutlined /> Settings
+        </Space>
+      </Menu.Item>
+      <Menu.Item  >
+        <Space>
+          <UnlockOutlined />Change Password
+        </Space>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item>
+        <Space>
+          <LogoutOutlined />Log Out
+        </Space>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <LayoutAnt>
@@ -164,34 +181,37 @@ function Home() {
           {/* <img alt="aaa" style={{width:'100%', height: 'auto'}} src={Logo} /> */}
 
         </div>
-        <Menu selectedKeys={activeUrl} theme="light" mode="inline"   >
-          <Menu.Item key="8" icon={<CalculatorOutlined />} onClick={clickCalculate}>
+        <Menu selectedKeys={activeUrl} theme="light" mode="inline" >
+        <Menu.Item key="9" icon={<DatabaseOutlined />} title="dashboard" onClick={(e) =>ClickGoPage(e, "dashboard")}>
+              {/* {t(`dashboard`)} */}dashboard
+            </Menu.Item>
+          <Menu.Item key="8" icon={<CalculatorOutlined />} onClick={(e) =>ClickGoPage(e, "calculate")}>
             {t(`calculation`)}
           </Menu.Item>
-          <Menu.Item key="1" icon={<FundOutlined />} onClick={clickcomponent}>
+          <Menu.Item key="1" icon={<FundOutlined />} name="component" onClick={(e) =>ClickGoPage(e, "component")}>
             {t(`component`)}
           </Menu.Item>
-          <Menu.Item key="2" icon={<FunctionOutlined />} onClick={clickCoefficient} >
+          <Menu.Item key="2" icon={<FunctionOutlined />} onClick={(e) =>ClickGoPage(e, "coefficient")}>
             {t(`coefficient`)}
           </Menu.Item>
           {/* <Menu.Item key="4" icon={<AccountBookOutlined />} onClick={clickAccountPlan}>
           accountPlan
           </Menu.Item> */}
-          <Menu.Item key="3" icon={<UsergroupAddOutlined />} onClick={clickEmployee}>
+          <Menu.Item key="3" icon={<UsergroupAddOutlined />} onClick={(e) =>ClickGoPage(e, "employee")}>
             {t(`employee`)}
           </Menu.Item>
 
           <SubMenu key="sub1" title={t(`setting`)} icon={<SettingOutlined />}>
-            <Menu.Item key="4" icon={<ProjectOutlined />} onClick={clickProject}>
+            <Menu.Item key="4" icon={<ProjectOutlined />} onClick={(e) =>ClickGoPage(e, "project")}>
               {t(`project`)}
             </Menu.Item>
-            <Menu.Item key="5" icon={<StrikethroughOutlined />} onClick={clickCostCenter}>
+            <Menu.Item key="5" icon={<StrikethroughOutlined />} onClick={(e) =>ClickGoPage(e, "costCenter")}>
               {t(`costCenter`)}
             </Menu.Item>
-            <Menu.Item key="6" icon={<DiffOutlined />} onClick={clickAccountsReportChart}>
+            <Menu.Item key="6" icon={<DiffOutlined />} onClick={(e) =>ClickGoPage(e, "accountsReportChart")}>
               accountsReportChart
             </Menu.Item>
-            <Menu.Item key="7" icon={<DatabaseOutlined />} onClick={clickDepartment}>
+            <Menu.Item key="7" icon={<DatabaseOutlined />} onClick={(e) =>ClickGoPage(e, "department")}>
               {t(`department`)}
             </Menu.Item>
 
@@ -202,7 +222,7 @@ function Home() {
       <LayoutAnt className="site-layout">
         <Header
           style={{
-            position: 'fixed',
+            // position: 'fixed',
             zIndex: 1, width: '100%',
             backgroundColor: '#f5f7f7'
           }}
@@ -212,21 +232,38 @@ function Home() {
 
           {/* <div style={{ display: "flex"}}> */}
 
-            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-              className: 'trigger',
-              onClick: toggle,
-            })}
+          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+            className: 'trigger',
+            onClick: toggle,
+          })}
 
 
 
 
-            <div style={{ float: 'right', marginRight: 300 }}>
-              <Select defaultValue="en" style={{ width: 120 }} onChange={handleChange}>
-                <Option value="en">En</Option>
-                <Option value="ge">Ge</Option>
+          <div style={{ float: 'right', right: 0 }}>
+            {/* <Select defaultValue="en" style={{ width: 120 }} onChange={handleChange}>
+              <Option value="en">En</Option>
+              <Option value="ge">Ge</Option>
 
-              </Select>
-            </div>
+            </Select> */}
+
+            <Space size={'large'}>
+              <Dropdown overlay={userMenu}>
+                <div style={{ cursor: 'pointer' }}>
+                  <Space>
+                    <Avatar size={32} icon={<UserOutlined />}/>
+                    <span>Avtandil</span>
+                  </Space>
+                </div>
+              </Dropdown>
+
+              <Dropdown overlay={languageMenu}>
+                <div className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                  <GlobalOutlined style={{ fontSize: '23px', color: '#1f91ff', cursor: 'pointer' }} />
+                </div>
+              </Dropdown>
+            </Space>
+          </div>
 
           {/* </div> */}
 
@@ -235,8 +272,8 @@ function Home() {
         <Content
           className="site-layout-background"
           style={{
-            margin: '85px 16px',
-            padding: 18,
+            margin: '35px 16px',
+            // padding: 18,
             // minHeight: 280,
             // textAlign: "center"
           }}
@@ -248,7 +285,7 @@ function Home() {
 
           <Switch>
             <Route exact path="/">
-              <Redirect to={`${HOME_PAGE}/component`} />
+              <Redirect to={`${HOME_PAGE}/dashboard`} />
             </Route>
             <Route path={`${HOME_PAGE}/component`}>
               <Component />
@@ -286,6 +323,9 @@ function Home() {
             </Route>
             <Route path={`${HOME_PAGE}/employeeByDepartment/:id`}>
               <EmployeeByDepartment />
+            </Route>
+            <Route path={`${HOME_PAGE}/dashboard`}>
+              <Dashboard />
             </Route>
           </Switch>
 
